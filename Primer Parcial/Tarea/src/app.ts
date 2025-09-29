@@ -1,0 +1,44 @@
+import { ClienteService } from "../src/services/Scliente"; //Importamos el servicio que tiene CRUD de cliente
+
+const clienteService = new ClienteService(); //Instanciamos el servicio
+
+
+//Usamos la funcion para crear cliente
+clienteService.crearCliente(
+    { nombre: "Juan Perez", telefono: "123456789", direccion: "Av. Siempre Viva 123" },
+    (err, cliente) => {
+        if (err) console.log("Error al crear:", err);
+        else console.log("Cliente creado:", cliente);
+    }
+);
+
+
+//Usamos la funcion para obtener cliente y listar clientes
+(async () => {
+    try {
+        const cliente = await clienteService.obtenerCliente(1);
+        console.log("Cliente obtenido: ", cliente);
+
+        const todos = await clienteService.listarClientes();
+        console.log("Todos los clientes: ", todos);
+    } catch (err) {
+        console.error(err);
+    }
+
+})();
+
+
+//Usamos la funcion para actualizar cliente
+clienteService.actualizarCliente(1, { telefono: "987654321" })
+    .then( c => console.log("Cliente actualizado: ", c))
+    .catch( err => console.error(err));
+
+//Usamos la funcion para eliminar cliente
+(async () => {
+    try {
+        const eliminado = await clienteService.eliminarCliente(1);
+        console.log("Cliente eliminado: ", eliminado);
+    } catch (err) {
+        console.error(err);
+    }
+})();
