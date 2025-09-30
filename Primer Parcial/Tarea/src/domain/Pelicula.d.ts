@@ -4,4 +4,4 @@ export interface IPelicula {
     genero: string;
     año: number;
 }
-//# sourceMappingURL=Pelicula.d.ts.map
+//# sourceMappingURL=pelicula.d.ts.map
