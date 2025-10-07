@@ -7,7 +7,7 @@ import { Sala } from "./sala.js";
 export class Funcion {
     @PrimaryGeneratedColumn("uuid")
     id: string;
-
+    
     @Column()
     nombre: string;
 
