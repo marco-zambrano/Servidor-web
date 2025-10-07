@@ -1,7 +1,8 @@
-import {Entity, Column, PrimaryGeneratedColumn} from "typeorm"
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
+import { Funcion } from "./funcion.js";
 
 @Entity()
-export class Pelicula{
+export class Pelicula {
     @PrimaryGeneratedColumn("uuid")
     id: string;
 
@@ -17,6 +18,7 @@ export class Pelicula{
     @Column()
     clasificacion: "adulto" | "jovenes" | "infantil";
 
+    // Relación con Funcion (una película puede tener varias funciones)
+    @OneToMany(() => Funcion, funcion => funcion.pelicula)
+    funciones: Funcion[];
 }
-
-
