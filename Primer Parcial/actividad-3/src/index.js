@@ -1,4 +1,2 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-console.log('¡Proyecto Node + TypeScript funcionando!');
+import "reflect-metadata";
 //# sourceMappingURL=index.js.map

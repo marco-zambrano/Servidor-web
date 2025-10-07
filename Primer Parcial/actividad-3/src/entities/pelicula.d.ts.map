@@ -1,0 +1,1 @@
+{"version":3,"file":"pelicula.d.ts","sourceRoot":"","sources":["pelicula.ts"],"names":[],"mappings":"AAEA,qBACa,QAAQ;IAEjB,EAAE,EAAE,MAAM,CAAC;IAGX,MAAM,EAAE,MAAM,CAAC;IAGf,MAAM,EAAE,MAAM,CAAC;IAGf,WAAW,EAAE,MAAM,CAAC;IAGpB,aAAa,EAAE,QAAQ,GAAG,SAAS,GAAG,UAAU,CAAC;CAEpD"}
