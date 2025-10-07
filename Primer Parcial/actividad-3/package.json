@@ -17,5 +17,9 @@
     "@types/node": "^24.7.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.27"
   }
 }
