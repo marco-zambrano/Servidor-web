@@ -1,1 +1,1 @@
-console.log('¡Proyecto Node + TypeScript funcionando!');
+import "reflect-metadata"
