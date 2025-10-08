@@ -36,7 +36,7 @@ async function main() {
     console.log("Cliente eliminado");
 
     // --- PELICULA ---
-    const pelicula = await peliculaService.create({ titulo: "Matrix", genero: "Acción" });
+    const pelicula = await peliculaService.create({ titulo: "Matrix", genero: "Acción", descripcion: "Película de acción clásica", clasificacion: "adulto" });
     console.log("Película creada:", pelicula);
 
     const peliculas = await peliculaService.findAll();
@@ -52,7 +52,7 @@ async function main() {
     console.log("Película eliminada");
 
     // --- SALA ---
-    const sala = await salaService.create({ nombre: "Sala 1", capacidad: 100 });
+    const sala = await salaService.create({ nombre: "Sala 1", capacidad: 100, tipo: "2D", estado: "disponible" });
     console.log("Sala creada:", sala);
 
     const salas = await salaService.findAll();
@@ -69,11 +69,13 @@ async function main() {
 
     // --- FUNCION ---
     // Aquí se crean de nuevo para el ejemplo
-    const pelicula2 = await peliculaService.create({ titulo: "Inception", genero: "Ciencia Ficción" });
-    const sala2 = await salaService.create({ nombre: "Sala 2", capacidad: 80 });
+    const pelicula2 = await peliculaService.create({ titulo: "Inception", genero: "Ciencia Ficción", descripcion: "Película de ciencia ficción", clasificacion: "adulto" });
+    const sala2 = await salaService.create({ nombre: "Sala 2", capacidad: 80, tipo: "IMAX", estado: "disponible" });
 
     const funcion = await funcionService.create({
+        nombre: "Función Matutina",
         fecha: new Date(),
+        precio: 8.5,
         pelicula: pelicula2,
         sala: sala2
     });

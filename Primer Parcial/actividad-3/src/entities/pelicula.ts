@@ -4,19 +4,19 @@ import { Funcion } from "./funcion.js";
 @Entity()
 export class Pelicula {
     @PrimaryGeneratedColumn("uuid")
-    id: string;
+    id!: string;
 
     @Column()
-    titulo: string;
+    titulo!: string;
 
     @Column()
-    genero: string;
+    genero!: string;
 
     @Column()
-    descripcion: string;
+    descripcion!: string;
 
     @Column()
-    clasificacion: "adulto" | "jovenes" | "infantil";
+    clasificacion!: "adulto" | "jovenes" | "infantil";
 
     // Relación con Funcion (una película puede tener varias funciones)
     //@OneToMany(() => Funcion, funcion => funcion.pelicula)

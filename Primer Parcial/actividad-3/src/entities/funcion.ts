@@ -6,26 +6,26 @@ import { Cliente } from "./cliente.js";
 @Entity()
 export class Funcion {
     @PrimaryGeneratedColumn("uuid")
-    id: string;
+    id!: string;
     
     @Column()
-    nombre: string;
+    nombre!: string;
 
     @Column()
-    fecha: Date;
+    fecha!: Date;
 
     @Column()
-    precio: number;
+    precio!: number;
 
     @ManyToOne(() => Pelicula)
     @JoinColumn()
-    pelicula: Pelicula;
+    pelicula!: Pelicula;
 
     @ManyToOne(() => Sala)
     @JoinColumn()
-    sala: Sala;
+    sala!: Sala;
 
     @ManyToOne(() => Cliente)
     @JoinColumn()
-    cliente: Cliente;
+    cliente!: Cliente;
 }
