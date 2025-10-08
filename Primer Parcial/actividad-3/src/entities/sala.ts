@@ -4,19 +4,19 @@ import { Funcion } from "./funcion.js";
 @Entity()
 export class Sala {
     @PrimaryGeneratedColumn("uuid")
-    id: string;
+    id!: string;
 
     @Column()
-    nombre: string;
+    nombre!: string;
 
     @Column()
-    capacidad: number;
+    capacidad!: number;
 
     @Column()
-    tipo: string;
+    tipo!: string;
 
     @Column()
-    estado: "disponible" | "ocupada" | "mantenimiento";
+    estado!: "disponible" | "ocupada" | "mantenimiento";
 
     // Relación con Funcion (una sala puede tener varias funciones)
     //@OneToMany(() => Funcion, funcion => funcion.sala)

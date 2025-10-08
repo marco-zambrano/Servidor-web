@@ -4,13 +4,13 @@ import { Funcion } from "./funcion.js";
 @Entity()
 export class Cliente {
     @PrimaryGeneratedColumn("uuid")
-    id: string;
+    id!: string;
 
     @Column()
-    nombre: string;
+    nombre!: string;
 
     @Column()
-    correo: string;
+    correo!: string;
 
     //@OneToMany(() => Funcion, funcion => funcion.cliente)
     //funciones: Funcion[];
