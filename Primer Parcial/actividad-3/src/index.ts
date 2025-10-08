@@ -68,7 +68,6 @@ async function main() {
     console.log("Sala eliminada");
 
     // --- FUNCION ---
-    // NOTA: Debes tener IDs válidos de película y sala para crear una función
     // Aquí se crean de nuevo para el ejemplo
     const pelicula2 = await peliculaService.create({ titulo: "Inception", genero: "Ciencia Ficción" });
     const sala2 = await salaService.create({ nombre: "Sala 2", capacidad: 80 });
