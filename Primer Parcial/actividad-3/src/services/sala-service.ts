@@ -25,5 +25,5 @@ export class SalaService {
     // Eliminar sala
     async remove(id: string) {
         return this.repo.delete(id);
-    }
+    }
 }
