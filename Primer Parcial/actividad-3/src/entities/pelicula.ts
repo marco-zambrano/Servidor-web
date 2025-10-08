@@ -19,6 +19,6 @@ export class Pelicula {
     clasificacion: "adulto" | "jovenes" | "infantil";
 
     // Relación con Funcion (una película puede tener varias funciones)
-    @OneToMany(() => Funcion, funcion => funcion.pelicula)
-    funciones: Funcion[];
+    //@OneToMany(() => Funcion, funcion => funcion.pelicula)
+    //funciones: Funcion[];
 }

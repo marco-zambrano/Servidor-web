@@ -1,8 +1,8 @@
-import {Entity, Column, PrimaryGeneratedColumn} from "typeorm"
- 
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import { Funcion } from "./funcion.js";
 
 @Entity()
-export class Cliente{
+export class Cliente {
     @PrimaryGeneratedColumn("uuid")
     id: string;
 
@@ -12,12 +12,6 @@ export class Cliente{
     @Column()
     correo: string;
 
-    @Column()
-    telefono: string;
-
-    @Column()
-    direccion: string;
-
-    @Column()
-    fechaRegistro: Date;
+    //@OneToMany(() => Funcion, funcion => funcion.cliente)
+    //funciones: Funcion[];
 }

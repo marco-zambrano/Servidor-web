@@ -19,6 +19,6 @@ export class Sala {
     estado: "disponible" | "ocupada" | "mantenimiento";
 
     // Relación con Funcion (una sala puede tener varias funciones)
-    @OneToMany(() => Funcion, funcion => funcion.sala)
-    funciones: Funcion[];
+    //@OneToMany(() => Funcion, funcion => funcion.sala)
+    //funciones: Funcion[];
 }
