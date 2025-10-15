@@ -1,5 +1,4 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
-import { Funcion } from "./funcion.js";
 
 @Entity()
 export class Cliente {
@@ -11,7 +10,4 @@ export class Cliente {
 
     @Column()
     correo!: string;
-
-    //@OneToMany(() => Funcion, funcion => funcion.cliente)
-    //funciones: Funcion[];
 }
