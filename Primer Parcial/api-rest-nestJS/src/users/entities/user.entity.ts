@@ -1,13 +1,17 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 
 @Entity()
-export class Cliente {
+export class User {
     @PrimaryGeneratedColumn("uuid")
     id!: string;
 
     @Column()
     nombre!: string;
+    
+    @Column()
+    edad!: number;
 
     @Column()
-    correo!: string;
+    apellido!: string;
+
 }
