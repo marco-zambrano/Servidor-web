@@ -4,6 +4,7 @@ import { UpdateReporteDto } from './dto/update-reporte.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Reporte } from './entities/reporte.entity';
 import { Repository } from 'typeorm';
+import { User } from '../users/entities/user.entity';
 
 @Injectable()
 export class ReporteService {
@@ -13,34 +14,38 @@ export class ReporteService {
 ) {}
 
   async create(createReporteDto: CreateReporteDto) {
-    const newReporte = this.reporteRepo.create(createReporteDto);
+    const { id_admin, ...rest } = createReporteDto as any;
+    const userRepo = this.reporteRepo.manager.getRepository(User);
+    const admin = await userRepo.findOneBy({ id_usuario: id_admin });
+    if (!admin) throw new NotFoundException(`Admin ${id_admin} no encontrado`);
+    const newReporte = this.reporteRepo.create({ ...rest, admin });
     return await this.reporteRepo.save(newReporte);
   }
 
   async findAll() {
-    return await this.reporteRepo.find();
+    return await this.reporteRepo.find({ relations: ['admin'] });
   }
 
-  async findOne(id: number) {
-    const reporte =  await this.reporteRepo.findOneBy({id_reporte: id}) //buscamos el reporte por id usando el repositorio
+  async findOne(id: string) {
+    const reporte =  await this.reporteRepo.findOne({ where: { id_reporte: id }, relations: ['admin'] });
     if (!reporte) {
-      throw new NotFoundException(`No se encontro el reporte ${id}`); //Error 400 genera
+      throw new NotFoundException(`No se encontro el reporte ${id}`);
     }
     return reporte;
   }
 
-  async update(id: number, updateReporteDto: UpdateReporteDto) {
-    const reporte = await this.reporteRepo.findOneBy({id_reporte: id}) //buscamos el reporte por id usando el repositorio
+  async update(id: string, updateReporteDto: UpdateReporteDto) {
+    const reporte = await this.reporteRepo.findOne({ where: { id_reporte: id } });
     if (!reporte) {
-      throw new NotFoundException(`No se encontro el reporte con id: ${id}`); //Error 400 genera
+      throw new NotFoundException(`No se encontro el reporte con id: ${id}`);
     }
-    this.reporteRepo.update(id, updateReporteDto)
-    return await this.reporteRepo.findOneBy({id_reporte: id}); //se pone de nuevo por que se actualizo y hay que devolver el nuevo valor
+    this.reporteRepo.update({ id_reporte: id } as any, updateReporteDto);
+    return await this.reporteRepo.findOne({ where: { id_reporte: id } });
   }
 
-  async remove(id: number) {
-    const reporte = await this.findOne(id) //usamos el metodo findOne para verificar que el reporte existe
-    await this.reporteRepo.delete(id) //para borrar podemos usar delete, remove o softRemove, en este caso usamos delete
+  async remove(id: string) {
+    await this.findOne(id);
+    await this.reporteRepo.delete({ id_reporte: id } as any);
     return `El reporte con id: ${id} ha sido eliminado`;
   }
 }

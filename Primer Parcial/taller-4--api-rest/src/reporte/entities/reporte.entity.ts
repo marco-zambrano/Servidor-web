@@ -1,11 +1,14 @@
-import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { User } from '../../users/entities/user.entity';
+
+@Entity()
 export class Reporte {
-    @PrimaryGeneratedColumn('increment')
-    id_reporte: number;
+        @PrimaryGeneratedColumn('uuid')
+        id_reporte: string;
 
     @Column()
-    fecha_generación: Date;
+    fecha_generacion: Date;
 
-    @Column()
-    id_admin: string;
+    @ManyToOne(() => User, (u) => u.reportes)
+    admin: User;
 }

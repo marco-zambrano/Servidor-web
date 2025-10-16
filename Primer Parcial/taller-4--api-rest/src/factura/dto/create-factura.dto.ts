@@ -1,9 +1,6 @@
-import { IsDate, IsNumber, IsString } from "class-validator";
+import { IsDate, IsNumber, IsString, IsUUID } from "class-validator";
 
 export class CreateFacturaDto {
-    @IsNumber()
-    id_factura: number;
-
     @IsDate()
     fecha_emision: Date;
 
@@ -13,6 +10,6 @@ export class CreateFacturaDto {
     @IsString()
     metodo_pago: string;
 
-    @IsNumber()
-    id_reserva: number;
+        @IsUUID()
+        id_reserva: string;
 }
