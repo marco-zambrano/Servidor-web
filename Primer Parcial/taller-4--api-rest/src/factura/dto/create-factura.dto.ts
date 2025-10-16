@@ -10,6 +10,6 @@ export class CreateFacturaDto {
     @IsString()
     metodo_pago: string;
 
-        @IsUUID()
-        id_reserva: string;
+    @IsUUID()
+    id_reserva: string;
 }

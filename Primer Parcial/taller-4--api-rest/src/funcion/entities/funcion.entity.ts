@@ -5,10 +5,10 @@ import { Reserva } from '../../reserva/entities/reserva.entity';
 
 @Entity()
 export class Funcion {
-        @PrimaryGeneratedColumn('uuid')
-        id_funcion: string;
+    @PrimaryGeneratedColumn('uuid')
+    id_funcion: string;
 
-    @Column('timestamptz')
+    @Column('datetime')
     fecha_hora: Date;
 
     @Column('decimal', { precision: 10, scale: 2 })
