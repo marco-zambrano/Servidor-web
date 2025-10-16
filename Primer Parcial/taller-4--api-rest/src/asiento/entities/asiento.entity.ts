@@ -4,8 +4,8 @@ import { ReservaAsiento } from '../../reserva-asiento/entities/reserva-asiento.e
 
 @Entity()
 export class Asiento {
-        @PrimaryGeneratedColumn('uuid')
-        id_asiento: string;
+    @PrimaryGeneratedColumn('uuid')
+    id_asiento: string;
 
     @Column()
     numero: string;

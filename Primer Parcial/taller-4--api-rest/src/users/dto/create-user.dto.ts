@@ -6,11 +6,15 @@ export class CreateUserDto {
     @IsNotEmpty()
     nombre: string;
 
-    @IsNumber()
-    @Min(0)
-    edad: number;
+    @IsString()
+    @IsNotEmpty()
+    correo: string;
 
     @IsString()
     @IsNotEmpty()
-    apellido: string;
+    contrasena: string;
+
+    @IsString()
+    @IsNotEmpty()
+    rol: string;
 }
