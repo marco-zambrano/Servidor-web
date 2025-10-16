@@ -6,6 +6,10 @@ import { SalasModule } from './salas/salas.module';
 import { PeliculasModule } from './peliculas/peliculas.module';
 import { FacturaModule } from './factura/factura.module';
 import { ReporteModule } from './reporte/reporte.module';
+import { FuncionModule } from './funcion/funcion.module';
+import { ReservaModule } from './reserva/reserva.module';
+import { AsientoModule } from './asiento/asiento.module';
+import { ReservaAsientoModule } from './reserva-asiento/reserva-asiento.module';
 
 @Module({
   imports: [
@@ -16,11 +20,15 @@ import { ReporteModule } from './reporte/reporte.module';
       synchronize: true,
       logging: false,
     }), 
-    UsersModule, 
-    SalasModule, 
-    PeliculasModule,
-    FacturaModule,
-    ReporteModule
+  UsersModule,
+  SalasModule,
+  PeliculasModule,
+  FacturaModule,
+  ReporteModule,
+  FuncionModule,
+  ReservaModule,
+  AsientoModule,
+  ReservaAsientoModule,
   ],
   controllers: [],
   providers: [],
