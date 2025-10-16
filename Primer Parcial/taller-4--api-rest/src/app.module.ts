@@ -5,6 +5,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { SalasModule } from './salas/salas.module';
 import { PeliculasModule } from './peliculas/peliculas.module';
+import { FacturaModule } from './factura/factura.module';
+import { ReporteModule } from './reporte/reporte.module';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -13,7 +15,7 @@ import { PeliculasModule } from './peliculas/peliculas.module';
     entities: [__dirname + '/**/*.entity{.ts,.js}'],
     synchronize: true, //solo en desarrollo
     logging: true, //para debug
-}), UsersModule, SalasModule, PeliculasModule],
+}), UsersModule, SalasModule, PeliculasModule, FacturaModule, ReporteModule],
   controllers: [],
   providers: [],
 })
