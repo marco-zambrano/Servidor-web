@@ -27,7 +27,7 @@ export class UsersService {
   }
 
   async findOne(id: string) {
-    const user = await this.userRepository.findOneBy({id: id});
+    const user = await this.userRepository.findOneBy({id_usuario: id});
     if (!user) {
       throw new NotFoundException(`User with ID ${id} not found`); // NotFoundException para que devuelva el objeto como 404
     }
@@ -36,12 +36,12 @@ export class UsersService {
 
   async update(id: string, updateUserDto: UpdateUserDto) {
     await this.findOne(id);
-    this.userRepository.update(id, updateUserDto);
-    return await this.userRepository.findOneBy({id: id});
+    this.userRepository.update({ id_usuario: id } as any, updateUserDto);
+    return await this.userRepository.findOneBy({ id_usuario: id });
   }
 
   async remove(id: string) {
     await this.findOne(id); // Nos aseguramos que el usuario existe
-    return await this.userRepository.delete(id);
+    return await this.userRepository.delete({ id_usuario: id } as any);
   }
 }

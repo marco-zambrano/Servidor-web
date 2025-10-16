@@ -1,12 +1,9 @@
 import { IsDate, IsNumber, IsString, IsUUID, Max, MaxLength } from "class-validator";
 
 export class CreateReporteDto {
-    @IsNumber()
-    id_reporte: number;
-
     @IsDate()
-    fecha_generación: Date;
-    
+    fecha_generacion: Date;
+
     @IsUUID()
-    id_admin: string
+    id_admin: string;
 }

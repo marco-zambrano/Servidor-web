@@ -1,26 +1,41 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreatePeliculaDto } from './dto/create-pelicula.dto';
 import { UpdatePeliculaDto } from './dto/update-pelicula.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Pelicula } from './entities/pelicula.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class PeliculasService {
-  create(createPeliculaDto: CreatePeliculaDto) {
-    return 'This action adds a new pelicula';
+  constructor(
+    @InjectRepository(Pelicula)
+    private readonly peliculaRepo: Repository<Pelicula>,
+  ) {}
+
+  async create(createPeliculaDto: CreatePeliculaDto) {
+    const entity = this.peliculaRepo.create(createPeliculaDto);
+    return await this.peliculaRepo.save(entity);
   }
 
-  findAll() {
-    return `This action returns all peliculas`;
+  async findAll() {
+    return await this.peliculaRepo.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} pelicula`;
+  async findOne(id: string) {
+    const peli = await this.peliculaRepo.findOneBy({ id_pelicula: id });
+    if (!peli) throw new NotFoundException(`No se encontró la pelicula ${id}`);
+    return peli;
   }
 
-  update(id: number, updatePeliculaDto: UpdatePeliculaDto) {
-    return `This action updates a #${id} pelicula`;
+  async update(id: string, updatePeliculaDto: UpdatePeliculaDto) {
+    await this.findOne(id);
+    await this.peliculaRepo.update({ id_pelicula: id } as any, updatePeliculaDto);
+    return await this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} pelicula`;
+  async remove(id: string) {
+    await this.findOne(id);
+    await this.peliculaRepo.delete({ id_pelicula: id } as any);
+    return { message: `Pelicula ${id} eliminada` };
   }
 }

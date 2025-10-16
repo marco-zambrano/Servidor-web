@@ -1,26 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateSalaDto } from './dto/create-sala.dto';
 import { UpdateSalaDto } from './dto/update-sala.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Sala } from './entities/sala.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class SalasService {
-  create(createSalaDto: CreateSalaDto) {
-    return 'This action adds a new sala';
+  constructor(@InjectRepository(Sala) private readonly salaRepo: Repository<Sala>) {}
+
+  async create(createSalaDto: CreateSalaDto) {
+    const entity = this.salaRepo.create(createSalaDto);
+    return await this.salaRepo.save(entity);
   }
 
-  findAll() {
-    return `This action returns all salas`;
+  async findAll() {
+    return await this.salaRepo.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} sala`;
+  async findOne(id: string) {
+    const sala = await this.salaRepo.findOneBy({ id_sala: id });
+    if (!sala) throw new NotFoundException(`No se encontró la sala ${id}`);
+    return sala;
   }
 
-  update(id: number, updateSalaDto: UpdateSalaDto) {
-    return `This action updates a #${id} sala`;
+  async update(id: string, updateSalaDto: UpdateSalaDto) {
+    await this.findOne(id);
+    await this.salaRepo.update({ id_sala: id } as any, updateSalaDto);
+    return await this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} sala`;
+  async remove(id: string) {
+    await this.findOne(id);
+    await this.salaRepo.delete({ id_sala: id } as any);
+    return { message: `Sala ${id} eliminada` };
   }
 }
