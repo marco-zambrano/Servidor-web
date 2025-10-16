@@ -13,5 +13,4 @@ export class User {
 
     @Column()
     apellido!: string;
-
 }
