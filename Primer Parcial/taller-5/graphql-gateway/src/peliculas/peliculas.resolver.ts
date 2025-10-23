@@ -1,35 +1,28 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Args, ID, ResolveField, Parent } from '@nestjs/graphql';
 import { PeliculasService } from './peliculas.service';
-import { Pelicula } from './entities/pelicula.entity';
-import { CreatePeliculaInput } from './dto/create-pelicula.input';
-import { UpdatePeliculaInput } from './dto/update-pelicula.input';
+import { FuncionService } from '../funcion/funcion.service';
+import { PeliculaType } from '../types/pelicula.type';
+import { FuncionType } from '../types/funcion.type';
 
-@Resolver(() => Pelicula)
+@Resolver(() => PeliculaType)
 export class PeliculasResolver {
-  constructor(private readonly peliculasService: PeliculasService) {}
+  constructor(
+    private readonly peliculasService: PeliculasService,
+    private readonly funcionService: FuncionService,
+  ) {}
 
-  @Mutation(() => Pelicula)
-  createPelicula(@Args('createPeliculaInput') createPeliculaInput: CreatePeliculaInput) {
-    return this.peliculasService.create(createPeliculaInput);
-  }
-
-  @Query(() => [Pelicula], { name: 'peliculas' })
+  @Query(() => [PeliculaType], { name: 'peliculas' })
   findAll() {
     return this.peliculasService.findAll();
   }
 
-  @Query(() => Pelicula, { name: 'pelicula' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  @Query(() => PeliculaType, { name: 'pelicula' })
+  findOne(@Args('id', { type: () => ID }) id: string) {
     return this.peliculasService.findOne(id);
   }
 
-  @Mutation(() => Pelicula)
-  updatePelicula(@Args('updatePeliculaInput') updatePeliculaInput: UpdatePeliculaInput) {
-    return this.peliculasService.update(updatePeliculaInput.id, updatePeliculaInput);
-  }
-
-  @Mutation(() => Pelicula)
-  removePelicula(@Args('id', { type: () => Int }) id: number) {
-    return this.peliculasService.remove(id);
+  @ResolveField(() => [FuncionType], { nullable: true })
+  async funciones(@Parent() pelicula: PeliculaType) {
+    return this.funcionService.findByPelicula(pelicula.id_pelicula);
   }
 }
