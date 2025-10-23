@@ -12,6 +12,7 @@ import { PeliculasModule } from './peliculas/peliculas.module';
 import { FuncionModule } from './funcion/funcion.module';
 import { FacturaModule } from './factura/factura.module';
 import { AsientoModule } from './asiento/asiento.module';
+import { AnalyticsModule } from './analytics/analytics.module';
 @Module({
   imports: [
     GraphQLModule.forRoot({
@@ -37,6 +38,7 @@ import { AsientoModule } from './asiento/asiento.module';
     FuncionModule,
     FacturaModule,
     AsientoModule,
+    AnalyticsModule,
   ],
 })
 export class AppModule { }
