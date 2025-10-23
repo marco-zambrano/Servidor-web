@@ -1,6 +1,6 @@
 import { ObjectType, Field, ID, Int, Float, InputType } from '@nestjs/graphql';
-import { PeliculaType } from './pelicula.type';
-import { FuncionType } from './funcion.type';
+import { PeliculaType } from '../types/pelicula.type';
+import { FuncionType } from '../types/funcion.type';
 
 // Query 7: Búsqueda avanzada de funciones
 @InputType()

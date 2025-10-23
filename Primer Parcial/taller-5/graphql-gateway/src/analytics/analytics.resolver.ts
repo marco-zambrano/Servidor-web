@@ -4,12 +4,12 @@ import {
     CarteleraType,
     OcupacionSalaType,
     HistorialUsuarioType,
-} from '../types/cartelera.type';
+} from '../inputs/cartelera.input';
 import {
     PeliculaPopularType,
     RendimientoHorarioType,
     AnalisisIngresosType,
-} from '../types/analytics.type';
+} from '../inputs/analytics.input';
 import {
     FuncionBusquedaType,
     ClienteFrecuenteType,
@@ -17,7 +17,7 @@ import {
     BusquedaFuncionesInput,
     FiltroClientesFrecuentesInput,
     DisponibilidadFuncionesInput,
-} from '../types/busqueda.type';
+} from '../inputs/busqueda.input';
 
 @Resolver()
 export class AnalyticsResolver {

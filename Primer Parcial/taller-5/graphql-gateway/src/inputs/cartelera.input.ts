@@ -1,6 +1,6 @@
 import { ObjectType, Field, ID, Int, Float } from '@nestjs/graphql';
-import { PeliculaType } from './pelicula.type';
-import { SalaType } from './sala.type';
+import { PeliculaType } from '../types/pelicula.type';
+import { SalaType } from '../types/sala.type';
 
 // Query 1: Cartelera completa con funciones disponibles
 @ObjectType()

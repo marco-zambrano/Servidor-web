@@ -1,5 +1,5 @@
 import { ObjectType, Field, ID, Int, Float } from '@nestjs/graphql';
-import { PeliculaType } from './pelicula.type';
+import { PeliculaType } from '../types/pelicula.type';
 
 // Query 4: Películas más populares con estadísticas
 @ObjectType()
