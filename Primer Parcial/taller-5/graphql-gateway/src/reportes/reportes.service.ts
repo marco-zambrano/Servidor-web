@@ -1,26 +1,22 @@
 import { Injectable } from '@nestjs/common';
-import { CreateReporteInput } from './dto/create-reporte.input';
-import { UpdateReporteInput } from './dto/update-reporte.input';
+import { HttpService } from '@nestjs/axios';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable()
 export class ReportesService {
-  create(createReporteInput: CreateReporteInput) {
-    return 'This action adds a new reporte';
+  constructor(private readonly httpService: HttpService) {}
+
+  async findAll() {
+    const response = await firstValueFrom(
+      this.httpService.get('/reporte')
+    );
+    return response.data;
   }
 
-  findAll() {
-    return `This action returns all reportes`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} reporte`;
-  }
-
-  update(id: number, updateReporteInput: UpdateReporteInput) {
-    return `This action updates a #${id} reporte`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} reporte`;
+  async findOne(id: string) {
+    const response = await firstValueFrom(
+      this.httpService.get(`/reporte/${id}`)
+    );
+    return response.data;
   }
 }

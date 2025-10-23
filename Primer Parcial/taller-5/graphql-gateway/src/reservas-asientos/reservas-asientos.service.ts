@@ -1,26 +1,22 @@
 import { Injectable } from '@nestjs/common';
-import { CreateReservasAsientoInput } from './dto/create-reservas-asiento.input';
-import { UpdateReservasAsientoInput } from './dto/update-reservas-asiento.input';
+import { HttpService } from '@nestjs/axios';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable()
 export class ReservasAsientosService {
-  create(createReservasAsientoInput: CreateReservasAsientoInput) {
-    return 'This action adds a new reservasAsiento';
+  constructor(private readonly httpService: HttpService) {}
+
+  async findAll() {
+    const response = await firstValueFrom(
+      this.httpService.get('/reserva-asiento')
+    );
+    return response.data;
   }
 
-  findAll() {
-    return `This action returns all reservasAsientos`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} reservasAsiento`;
-  }
-
-  update(id: number, updateReservasAsientoInput: UpdateReservasAsientoInput) {
-    return `This action updates a #${id} reservasAsiento`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} reservasAsiento`;
+  async findOne(id: string) {
+    const response = await firstValueFrom(
+      this.httpService.get(`/reserva-asiento/${id}`)
+    );
+    return response.data;
   }
 }
