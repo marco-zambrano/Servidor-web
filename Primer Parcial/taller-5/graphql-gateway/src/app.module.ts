@@ -13,6 +13,7 @@ import { PeliculasModule } from './peliculas/peliculas.module';
 import { AsientosModule } from './asientos/asientos.module';
 import { UsersModule } from './users/users.module';
 import { SalasModule } from './salas/salas.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { SalasModule } from './salas/salas.module';
     ReservasAsientosModule,
     FacturasModule,
     ReportesModule,
+    DashboardModule,
   ],
   providers: [],
 })
