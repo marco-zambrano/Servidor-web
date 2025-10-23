@@ -1,26 +1,23 @@
 import { Injectable } from '@nestjs/common';
-import { CreateFacturaInput } from './dto/create-factura.input';
-import { UpdateFacturaInput } from './dto/update-factura.input';
+import { HttpService } from '@nestjs/axios';
+import { firstValueFrom } from 'rxjs';
+import { FacturaType } from '../types/factura.type';
 
 @Injectable()
 export class FacturaService {
-  create(createFacturaInput: CreateFacturaInput) {
-    return 'This action adds a new factura';
+  constructor(private readonly httpService: HttpService) {}
+
+  async findAll(): Promise<FacturaType[]> {
+    const response = await firstValueFrom(
+      this.httpService.get('/factura')
+    );
+    return response.data;
   }
 
-  findAll() {
-    return `This action returns all factura`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} factura`;
-  }
-
-  update(id: number, updateFacturaInput: UpdateFacturaInput) {
-    return `This action updates a #${id} factura`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} factura`;
+  async findOne(id: string): Promise<FacturaType> {
+    const response = await firstValueFrom(
+      this.httpService.get(`/factura/${id}`)
+    );
+    return response.data;
   }
 }

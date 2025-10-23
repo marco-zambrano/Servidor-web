@@ -1,35 +1,31 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Args, ID, ResolveField, Parent } from '@nestjs/graphql';
 import { FacturaService } from './factura.service';
-import { Factura } from './entities/factura.entity';
-import { CreateFacturaInput } from './dto/create-factura.input';
-import { UpdateFacturaInput } from './dto/update-factura.input';
+import { ReservaService } from '../reserva/reserva.service';
+import { FacturaType } from '../types/factura.type';
+import { ReservaType } from '../types/reserva.type';
 
-@Resolver(() => Factura)
+@Resolver(() => FacturaType)
 export class FacturaResolver {
-  constructor(private readonly facturaService: FacturaService) {}
+  constructor(
+    private readonly facturaService: FacturaService,
+    private readonly reservaService: ReservaService,
+  ) {}
 
-  @Mutation(() => Factura)
-  createFactura(@Args('createFacturaInput') createFacturaInput: CreateFacturaInput) {
-    return this.facturaService.create(createFacturaInput);
-  }
-
-  @Query(() => [Factura], { name: 'factura' })
+  @Query(() => [FacturaType], { name: 'facturas' })
   findAll() {
     return this.facturaService.findAll();
   }
 
-  @Query(() => Factura, { name: 'factura' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  @Query(() => FacturaType, { name: 'factura' })
+  findOne(@Args('id', { type: () => ID }) id: string) {
     return this.facturaService.findOne(id);
   }
 
-  @Mutation(() => Factura)
-  updateFactura(@Args('updateFacturaInput') updateFacturaInput: UpdateFacturaInput) {
-    return this.facturaService.update(updateFacturaInput.id, updateFacturaInput);
-  }
-
-  @Mutation(() => Factura)
-  removeFactura(@Args('id', { type: () => Int }) id: number) {
-    return this.facturaService.remove(id);
+  @ResolveField(() => ReservaType, { nullable: true })
+  async reserva(@Parent() factura: FacturaType) {
+    if (factura.reserva?.id_reserva) {
+      return this.reservaService.findOne(factura.reserva.id_reserva);
+    }
+    return null;
   }
 }
