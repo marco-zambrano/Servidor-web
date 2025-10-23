@@ -14,6 +14,8 @@ import { AsientosModule } from './asientos/asientos.module';
 import { UsersModule } from './users/users.module';
 import { SalasModule } from './salas/salas.module';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { AnalyticsModule } from './analytics/analytics.module';
+import { SearchModule } from './search/search.module';
 
 @Module({
   imports: [
@@ -38,6 +40,8 @@ import { DashboardModule } from './dashboard/dashboard.module';
     FacturasModule,
     ReportesModule,
     DashboardModule,
+    AnalyticsModule,
+    SearchModule,
   ],
   providers: [],
 })
