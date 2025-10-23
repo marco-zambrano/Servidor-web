@@ -14,7 +14,7 @@ import {
     FuncionCarteleraType,
     FuncionOcupacionType,
     ReservaDetalladaType,
-} from '../types/cartelera.type';
+} from '../inputs/cartelera.input';
 
 @Injectable()
 export class AnalyticsMarcoService {

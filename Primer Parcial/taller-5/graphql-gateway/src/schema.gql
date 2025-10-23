@@ -55,11 +55,6 @@ type ClienteFrecuenteType {
   ultimaReserva: DateTime!
 }
 
-input CreateReporteInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
-
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
@@ -163,12 +158,6 @@ type IngresosPorSalaType {
   porcentajeDelTotal: Float!
 }
 
-type Mutation {
-  createReporte(createReporteInput: CreateReporteInput!): Reporte!
-  removeReporte(id: Int!): Reporte!
-  updateReporte(updateReporteInput: UpdateReporteInput!): Reporte!
-}
-
 type OcupacionSalaType {
   asientosReservados: Int!
   funcionesDetalle: [FuncionOcupacionType!]!
@@ -244,7 +233,8 @@ type Query {
   Análisis de rendimiento de funciones agrupadas por rangos horarios (mañana, tarde, noche)
   """
   rendimientoPorHorario: [RendimientoHorarioType!]!
-  reporte(id: Int!): Reporte!
+  reporte(id: ID!): ReporteType!
+  reportes: [ReporteType!]!
   reserva(id: ID!): ReservaType!
   reservaAsiento(id: ID!): ReservaAsientoType!
   reservas: [ReservaType!]!
@@ -265,9 +255,10 @@ type RendimientoHorarioType {
   totalReservas: Int!
 }
 
-type Reporte {
-  """Example field (placeholder)"""
-  exampleField: Int!
+type ReporteType {
+  admin: UserType
+  fecha_generacion: DateTime!
+  id_reporte: ID!
 }
 
 type ReservaAsientoType {
@@ -307,12 +298,6 @@ type SalaType {
   id_sala: ID!
   nombre: String!
   tipo: String!
-}
-
-input UpdateReporteInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
 }
 
 type UserType {

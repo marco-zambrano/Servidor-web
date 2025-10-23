@@ -15,7 +15,7 @@ import {
     BusquedaFuncionesInput,
     FiltroClientesFrecuentesInput,
     DisponibilidadFuncionesInput,
-} from '../types/busqueda.type';
+} from '../inputs/busqueda.input';
 
 @Injectable()
 export class AnalyticsJeremyService {

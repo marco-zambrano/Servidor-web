@@ -10,7 +10,7 @@ import {
     AnalisisIngresosType,
     IngresosPorPeliculaType,
     IngresosPorSalaType,
-} from '../types/analytics.type';
+} from '../inputs/analytics.input';
 
 @Injectable()
 export class AnalyticsJostinService {
