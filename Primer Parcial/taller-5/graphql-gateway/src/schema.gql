@@ -1,0 +1,177 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type AsientoType {
+  estado: String!
+  id_asiento: ID!
+  numero: String!
+  reservasAsiento: [ReservaAsientoType!]
+  sala: SalaType
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type FacturaType {
+  fecha_emision: DateTime!
+  id_factura: ID!
+  metodo_pago: String!
+  reserva: ReservaType
+  total: Float!
+}
+
+type FuncionDashboardType {
+  asientos_disponibles: Int!
+  asientos_reservados: Int!
+  capacidad_sala: Int!
+  fecha_hora: DateTime!
+  genero_pelicula: String!
+  id_funcion: ID!
+  ingreso_estimado: Float!
+  nombre_sala: String!
+  porcentaje_ocupacion: Float!
+  precio: Float!
+  titulo_pelicula: String!
+  total_reservas: Int!
+}
+
+type FuncionResumenType {
+  fecha_hora: DateTime!
+  id_funcion: ID!
+  nombre_sala: String!
+  ocupacion: Float!
+  precio: Float!
+  reservas: Int!
+}
+
+type FuncionType {
+  fecha_hora: DateTime!
+  id_funcion: ID!
+  pelicula: PeliculaType
+  precio: Float!
+  reservas: [ReservaType!]
+  sala: SalaType
+}
+
+type PeliculaRendimientoType {
+  clasificacion: String
+  descripcion: String
+  funciones: [FuncionResumenType!]!
+  funciones_activas: Int!
+  genero: String!
+  id_pelicula: ID!
+  ingreso_total: Float!
+  promedio_ocupacion: Float!
+  titulo: String!
+  total_funciones: Int!
+  total_reservas: Int!
+}
+
+type PeliculaType {
+  clasificacion: String
+  descripcion: String
+  funciones: [FuncionType!]
+  genero: String!
+  id_pelicula: ID!
+  titulo: String!
+}
+
+type Query {
+  asiento(id: String!): AsientoType!
+  asientos: [AsientoType!]!
+  asientosBySala(salaId: String!): [AsientoType!]!
+  factura(id: String!): FacturaType!
+  facturaByReserva(reservaId: String!): FacturaType
+  facturas: [FacturaType!]!
+  funcion(id: String!): FuncionType!
+  funcionDashboard(idFuncion: String!): FuncionDashboardType!
+  funciones: [FuncionType!]!
+  funcionesByPelicula(peliculaId: String!): [FuncionType!]!
+  funcionesBySala(salaId: String!): [FuncionType!]!
+  pelicula(id: String!): PeliculaType!
+  peliculaRendimiento(idPelicula: String!): PeliculaRendimientoType!
+  peliculas: [PeliculaType!]!
+  reporte(id: String!): ReporteType!
+  reportes: [ReporteType!]!
+  reportesByAdmin(adminId: String!): [ReporteType!]!
+  reserva(id: String!): ReservaType!
+  reservaAsiento(id: String!): ReservaAsientoType!
+  reservas: [ReservaType!]!
+  reservasAsientos: [ReservaAsientoType!]!
+  reservasAsientosByReserva(reservaId: String!): [ReservaAsientoType!]!
+  reservasByFuncion(funcionId: String!): [ReservaType!]!
+  reservasByUsuario(usuarioId: String!): [ReservaType!]!
+  sala(id: String!): SalaType!
+  salas: [SalaType!]!
+  user(id: String!): UserType!
+  users: [UserType!]!
+  usuarioReporteCompleto(idUsuario: String!, limite: Int = 5): UsuarioReporteCompletoType!
+}
+
+type ReporteType {
+  admin: UserType
+  fecha_generacion: DateTime!
+  id_reporte: ID!
+}
+
+type ReservaAsientoType {
+  asiento: AsientoType
+  id: ID!
+  reserva: ReservaType
+}
+
+type ReservaDetalladaType {
+  cantidad_asientos: Int!
+  estado: String!
+  fecha_hora_funcion: DateTime!
+  id_reserva: ID!
+  metodo_pago: String
+  nombre_sala: String!
+  numeros_asientos: [String!]!
+  titulo_pelicula: String!
+  total_pagado: Float
+}
+
+type ReservaType {
+  cantidad_asientos: Int!
+  estado: String!
+  factura: FacturaType
+  funcion: FuncionType
+  id_reserva: ID!
+  reservasAsiento: [ReservaAsientoType!]
+  usuario: UserType
+}
+
+type SalaType {
+  asientos: [AsientoType!]
+  capacidad: Int!
+  estado: String!
+  funciones: [FuncionType!]
+  id_sala: ID!
+  nombre: String!
+  tipo: String!
+}
+
+type UserType {
+  correo: String!
+  id_usuario: ID!
+  nombre: String!
+  reportes: [ReporteType!]
+  reservas: [ReservaType!]
+  rol: String!
+}
+
+type UsuarioReporteCompletoType {
+  correo: String!
+  gasto_total: Float!
+  id_usuario: ID!
+  nombre: String!
+  reservas_activas: Int!
+  reservas_canceladas: Int!
+  rol: String!
+  total_reservas: Int!
+  ultimas_reservas: [ReservaDetalladaType!]!
+}
