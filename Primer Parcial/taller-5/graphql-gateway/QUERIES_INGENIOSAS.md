@@ -4,7 +4,7 @@ Este documento describe las 9 queries complejas implementadas en el GraphQL Gate
 
 ---
 
-## 📊 INTEGRANTE 1: Consultas de Información Agregada
+## INTEGRANTE 1: Consultas de Información Agregada
 
 Estas queries combinan datos de 2 o más entidades del servicio REST para generar vistas consolidadas.
 
