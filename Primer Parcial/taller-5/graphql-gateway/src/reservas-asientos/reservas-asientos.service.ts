@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
 
@@ -7,23 +7,35 @@ export class ReservasAsientosService {
   constructor(private readonly httpService: HttpService) {}
 
   async findAll() {
-    const response = await firstValueFrom(
-      this.httpService.get('/reserva-asiento')
-    );
-    return response.data;
+    try {
+      const response = await firstValueFrom(
+        this.httpService.get('/reserva-asiento')
+      );
+      return response.data;
+    } catch (error) {
+      throw new HttpException(error.response.data, error.response.status);
+    }
   }
 
   async findOne(id: string) {
-    const response = await firstValueFrom(
-      this.httpService.get(`/reserva-asiento/${id}`)
-    );
-    return response.data;
+    try {
+      const response = await firstValueFrom(
+        this.httpService.get(`/reserva-asiento/${id}`)
+      );
+      return response.data;
+    } catch (error) {
+      throw new HttpException(error.response.data, error.response.status);
+    }
   }
 
   async findByReserva(reservaId: string) {
-    const response = await firstValueFrom(
-      this.httpService.get(`/reserva-asiento?reserva=${reservaId}`)
-    );
-    return response.data;
+    try {
+      const response = await firstValueFrom(
+        this.httpService.get(`/reserva-asiento?reserva=${reservaId}`)
+      );
+      return response.data;
+    } catch (error) {
+      throw new HttpException(error.response.data, error.response.status);
+    }
   }
 }

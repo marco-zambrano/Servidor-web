@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
 
@@ -7,16 +7,24 @@ export class UsersService {
   constructor(private readonly httpService: HttpService) {}
 
   async findAll() {
-    const response = await firstValueFrom(
-      this.httpService.get('/users')
-    );
-    return response.data;
+    try {
+      const response = await firstValueFrom(
+        this.httpService.get('/users')
+      );
+      return response.data;
+    } catch (error) {
+      throw new HttpException(error.response.data, error.response.status);
+    }
   }
 
   async findOne(id: string) {
-    const response = await firstValueFrom(
-      this.httpService.get(`/users/${id}`)
-    );
-    return response.data;
+    try {
+      const response = await firstValueFrom(
+        this.httpService.get(`/users/${id}`)
+      );
+      return response.data;
+    } catch (error) {
+      throw new HttpException(error.response.data, error.response.status);
+    }
   }
 }

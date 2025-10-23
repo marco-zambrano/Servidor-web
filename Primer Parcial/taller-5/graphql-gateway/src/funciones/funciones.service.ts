@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
 
@@ -7,31 +7,46 @@ export class FuncionesService {
   constructor(private readonly httpService: HttpService) {}
 
   async findAll() {
-    const response = await firstValueFrom(
-      this.httpService.get('/funcion')
-    );
-    return response.data;
+    try {
+      const response = await firstValueFrom(
+        this.httpService.get('/funcion')
+      );
+      return response.data;
+    } catch (error) {
+      throw new HttpException(error.response.data, error.response.status);
+    }
   }
 
   async findOne(id: string) {
-    const response = await firstValueFrom(
-      this.httpService.get(`/funcion/${id}`)
-    );
-    return response.data;
+    try {
+      const response = await firstValueFrom(
+        this.httpService.get(`/funcion/${id}`)
+      );
+      return response.data;
+    } catch (error) {
+      throw new HttpException(error.response.data, error.response.status);
+    }
   }
 
   async findByPelicula(peliculaId: string) {
-    const response = await firstValueFrom(
-      this.httpService.get(`/funcion?pelicula=${peliculaId}`)
-    );
-    return response.data;
+    try {
+      const response = await firstValueFrom(
+        this.httpService.get(`/funcion?pelicula=${peliculaId}`)
+      );
+      return response.data;
+    } catch (error) {
+      throw new HttpException(error.response.data, error.response.status);
+    }
   }
 
   async findBySala(salaId: string) {
-    const response = await firstValueFrom(
-      this.httpService.get(`/funcion?sala=${salaId}`)
-    );
-    return response.data;
+    try {
+      const response = await firstValueFrom(
+        this.httpService.get(`/funcion?sala=${salaId}`)
+      );
+      return response.data;
+    } catch (error) {
+      throw new HttpException(error.response.data, error.response.status);
+    }
   }
 }
-
