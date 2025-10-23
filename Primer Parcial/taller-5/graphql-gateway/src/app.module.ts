@@ -20,10 +20,13 @@ import { AsientoModule } from './asiento/asiento.module';
       sortSchema: true,
       playground: true, // Apollo Playground
     }),
-    HttpModule.register({
-      baseURL: 'http://localhost:3000', // URL del servicio REST
-      timeout: 5000,
-      maxRedirects: 5,
+    HttpModule.registerAsync({
+      useFactory: () => ({
+        baseURL: 'http://localhost:3000',
+        timeout: 5000,
+        maxRedirects: 5,
+      }),
+      global: true,
     }),
     UsersModule,
     SalasModule,
