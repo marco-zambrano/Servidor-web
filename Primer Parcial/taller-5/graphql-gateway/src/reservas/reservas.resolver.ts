@@ -1,35 +1,28 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Args } from '@nestjs/graphql';
+import { ReservaType } from '../types/reserva.type';
 import { ReservasService } from './reservas.service';
-import { Reserva } from './entities/reserva.entity';
-import { CreateReservaInput } from './dto/create-reserva.input';
-import { UpdateReservaInput } from './dto/update-reserva.input';
 
-@Resolver(() => Reserva)
+@Resolver(() => ReservaType)
 export class ReservasResolver {
-  constructor(private readonly reservasService: ReservasService) {}
+  constructor(private reservasService: ReservasService) {}
 
-  @Mutation(() => Reserva)
-  createReserva(@Args('createReservaInput') createReservaInput: CreateReservaInput) {
-    return this.reservasService.create(createReservaInput);
-  }
-
-  @Query(() => [Reserva], { name: 'reservas' })
-  findAll() {
+  @Query(() => [ReservaType], { name: 'reservas' })
+  async getReservas() {
     return this.reservasService.findAll();
   }
 
-  @Query(() => Reserva, { name: 'reserva' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  @Query(() => ReservaType, { name: 'reserva' })
+  async getReserva(@Args('id', { type: () => String }) id: string) {
     return this.reservasService.findOne(id);
   }
 
-  @Mutation(() => Reserva)
-  updateReserva(@Args('updateReservaInput') updateReservaInput: UpdateReservaInput) {
-    return this.reservasService.update(updateReservaInput.id, updateReservaInput);
+  @Query(() => [ReservaType], { name: 'reservasByUsuario' })
+  async getReservasByUsuario(@Args('usuarioId', { type: () => String }) usuarioId: string) {
+    return this.reservasService.findByUsuario(usuarioId);
   }
 
-  @Mutation(() => Reserva)
-  removeReserva(@Args('id', { type: () => Int }) id: number) {
-    return this.reservasService.remove(id);
+  @Query(() => [ReservaType], { name: 'reservasByFuncion' })
+  async getReservasByFuncion(@Args('funcionId', { type: () => String }) funcionId: string) {
+    return this.reservasService.findByFuncion(funcionId);
   }
 }

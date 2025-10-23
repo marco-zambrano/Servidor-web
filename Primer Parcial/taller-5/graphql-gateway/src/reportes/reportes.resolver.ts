@@ -1,35 +1,23 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Args } from '@nestjs/graphql';
+import { ReporteType } from '../types/reporte.type';
 import { ReportesService } from './reportes.service';
-import { Reporte } from './entities/reporte.entity';
-import { CreateReporteInput } from './dto/create-reporte.input';
-import { UpdateReporteInput } from './dto/update-reporte.input';
 
-@Resolver(() => Reporte)
+@Resolver(() => ReporteType)
 export class ReportesResolver {
-  constructor(private readonly reportesService: ReportesService) {}
+  constructor(private reportesService: ReportesService) {}
 
-  @Mutation(() => Reporte)
-  createReporte(@Args('createReporteInput') createReporteInput: CreateReporteInput) {
-    return this.reportesService.create(createReporteInput);
-  }
-
-  @Query(() => [Reporte], { name: 'reportes' })
-  findAll() {
+  @Query(() => [ReporteType], { name: 'reportes' })
+  async getReportes() {
     return this.reportesService.findAll();
   }
 
-  @Query(() => Reporte, { name: 'reporte' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  @Query(() => ReporteType, { name: 'reporte' })
+  async getReporte(@Args('id', { type: () => String }) id: string) {
     return this.reportesService.findOne(id);
   }
 
-  @Mutation(() => Reporte)
-  updateReporte(@Args('updateReporteInput') updateReporteInput: UpdateReporteInput) {
-    return this.reportesService.update(updateReporteInput.id, updateReporteInput);
-  }
-
-  @Mutation(() => Reporte)
-  removeReporte(@Args('id', { type: () => Int }) id: number) {
-    return this.reportesService.remove(id);
+  @Query(() => [ReporteType], { name: 'reportesByAdmin' })
+  async getReportesByAdmin(@Args('adminId', { type: () => String }) adminId: string) {
+    return this.reportesService.findByAdmin(adminId);
   }
 }

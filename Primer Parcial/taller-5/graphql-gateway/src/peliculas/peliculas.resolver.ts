@@ -1,35 +1,18 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Args } from '@nestjs/graphql';
+import { PeliculaType } from '../types/pelicula.type';
 import { PeliculasService } from './peliculas.service';
-import { Pelicula } from './entities/pelicula.entity';
-import { CreatePeliculaInput } from './dto/create-pelicula.input';
-import { UpdatePeliculaInput } from './dto/update-pelicula.input';
 
-@Resolver(() => Pelicula)
+@Resolver(() => PeliculaType)
 export class PeliculasResolver {
-  constructor(private readonly peliculasService: PeliculasService) {}
+  constructor(private peliculasService: PeliculasService) {}
 
-  @Mutation(() => Pelicula)
-  createPelicula(@Args('createPeliculaInput') createPeliculaInput: CreatePeliculaInput) {
-    return this.peliculasService.create(createPeliculaInput);
-  }
-
-  @Query(() => [Pelicula], { name: 'peliculas' })
-  findAll() {
+  @Query(() => [PeliculaType], { name: 'peliculas' })
+  async getPeliculas() {
     return this.peliculasService.findAll();
   }
 
-  @Query(() => Pelicula, { name: 'pelicula' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  @Query(() => PeliculaType, { name: 'pelicula' })
+  async getPelicula(@Args('id', { type: () => String }) id: string) {
     return this.peliculasService.findOne(id);
-  }
-
-  @Mutation(() => Pelicula)
-  updatePelicula(@Args('updatePeliculaInput') updatePeliculaInput: UpdatePeliculaInput) {
-    return this.peliculasService.update(updatePeliculaInput.id, updatePeliculaInput);
-  }
-
-  @Mutation(() => Pelicula)
-  removePelicula(@Args('id', { type: () => Int }) id: number) {
-    return this.peliculasService.remove(id);
   }
 }

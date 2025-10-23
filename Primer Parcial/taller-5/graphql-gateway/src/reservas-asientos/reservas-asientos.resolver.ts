@@ -1,35 +1,23 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Args } from '@nestjs/graphql';
+import { ReservaAsientoType } from '../types/reserva-asiento.type';
 import { ReservasAsientosService } from './reservas-asientos.service';
-import { ReservasAsiento } from './entities/reservas-asiento.entity';
-import { CreateReservasAsientoInput } from './dto/create-reservas-asiento.input';
-import { UpdateReservasAsientoInput } from './dto/update-reservas-asiento.input';
 
-@Resolver(() => ReservasAsiento)
+@Resolver(() => ReservaAsientoType)
 export class ReservasAsientosResolver {
-  constructor(private readonly reservasAsientosService: ReservasAsientosService) {}
+  constructor(private reservasAsientosService: ReservasAsientosService) {}
 
-  @Mutation(() => ReservasAsiento)
-  createReservasAsiento(@Args('createReservasAsientoInput') createReservasAsientoInput: CreateReservasAsientoInput) {
-    return this.reservasAsientosService.create(createReservasAsientoInput);
-  }
-
-  @Query(() => [ReservasAsiento], { name: 'reservasAsientos' })
-  findAll() {
+  @Query(() => [ReservaAsientoType], { name: 'reservasAsientos' })
+  async getReservasAsientos() {
     return this.reservasAsientosService.findAll();
   }
 
-  @Query(() => ReservasAsiento, { name: 'reservasAsiento' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  @Query(() => ReservaAsientoType, { name: 'reservaAsiento' })
+  async getReservaAsiento(@Args('id', { type: () => String }) id: string) {
     return this.reservasAsientosService.findOne(id);
   }
 
-  @Mutation(() => ReservasAsiento)
-  updateReservasAsiento(@Args('updateReservasAsientoInput') updateReservasAsientoInput: UpdateReservasAsientoInput) {
-    return this.reservasAsientosService.update(updateReservasAsientoInput.id, updateReservasAsientoInput);
-  }
-
-  @Mutation(() => ReservasAsiento)
-  removeReservasAsiento(@Args('id', { type: () => Int }) id: number) {
-    return this.reservasAsientosService.remove(id);
+  @Query(() => [ReservaAsientoType], { name: 'reservasAsientosByReserva' })
+  async getReservasAsientosByReserva(@Args('reservaId', { type: () => String }) reservaId: string) {
+    return this.reservasAsientosService.findByReserva(reservaId);
   }
 }

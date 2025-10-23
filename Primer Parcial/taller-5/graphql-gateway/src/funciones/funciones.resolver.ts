@@ -1,35 +1,28 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Args } from '@nestjs/graphql';
+import { FuncionType } from '../types/funcion.type';
 import { FuncionesService } from './funciones.service';
-import { Funcione } from './entities/funcione.entity';
-import { CreateFuncioneInput } from './dto/create-funcione.input';
-import { UpdateFuncioneInput } from './dto/update-funcione.input';
 
-@Resolver(() => Funcione)
+@Resolver(() => FuncionType)
 export class FuncionesResolver {
-  constructor(private readonly funcionesService: FuncionesService) {}
+  constructor(private funcionesService: FuncionesService) {}
 
-  @Mutation(() => Funcione)
-  createFuncione(@Args('createFuncioneInput') createFuncioneInput: CreateFuncioneInput) {
-    return this.funcionesService.create(createFuncioneInput);
-  }
-
-  @Query(() => [Funcione], { name: 'funciones' })
-  findAll() {
+  @Query(() => [FuncionType], { name: 'funciones' })
+  async getFunciones() {
     return this.funcionesService.findAll();
   }
 
-  @Query(() => Funcione, { name: 'funcione' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  @Query(() => FuncionType, { name: 'funcion' })
+  async getFuncion(@Args('id', { type: () => String }) id: string) {
     return this.funcionesService.findOne(id);
   }
 
-  @Mutation(() => Funcione)
-  updateFuncione(@Args('updateFuncioneInput') updateFuncioneInput: UpdateFuncioneInput) {
-    return this.funcionesService.update(updateFuncioneInput.id, updateFuncioneInput);
+  @Query(() => [FuncionType], { name: 'funcionesByPelicula' })
+  async getFuncionesByPelicula(@Args('peliculaId', { type: () => String }) peliculaId: string) {
+    return this.funcionesService.findByPelicula(peliculaId);
   }
 
-  @Mutation(() => Funcione)
-  removeFuncione(@Args('id', { type: () => Int }) id: number) {
-    return this.funcionesService.remove(id);
+  @Query(() => [FuncionType], { name: 'funcionesBySala' })
+  async getFuncionesBySala(@Args('salaId', { type: () => String }) salaId: string) {
+    return this.funcionesService.findBySala(salaId);
   }
 }

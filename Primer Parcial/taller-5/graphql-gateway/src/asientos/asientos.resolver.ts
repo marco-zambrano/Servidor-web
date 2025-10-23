@@ -1,35 +1,23 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Args } from '@nestjs/graphql';
+import { AsientoType } from '../types/asiento.type';
 import { AsientosService } from './asientos.service';
-import { Asiento } from './entities/asiento.entity';
-import { CreateAsientoInput } from './dto/create-asiento.input';
-import { UpdateAsientoInput } from './dto/update-asiento.input';
 
-@Resolver(() => Asiento)
+@Resolver(() => AsientoType)
 export class AsientosResolver {
-  constructor(private readonly asientosService: AsientosService) {}
+  constructor(private asientosService: AsientosService) {}
 
-  @Mutation(() => Asiento)
-  createAsiento(@Args('createAsientoInput') createAsientoInput: CreateAsientoInput) {
-    return this.asientosService.create(createAsientoInput);
-  }
-
-  @Query(() => [Asiento], { name: 'asientos' })
-  findAll() {
+  @Query(() => [AsientoType], { name: 'asientos' })
+  async getAsientos() {
     return this.asientosService.findAll();
   }
 
-  @Query(() => Asiento, { name: 'asiento' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  @Query(() => AsientoType, { name: 'asiento' })
+  async getAsiento(@Args('id', { type: () => String }) id: string) {
     return this.asientosService.findOne(id);
   }
 
-  @Mutation(() => Asiento)
-  updateAsiento(@Args('updateAsientoInput') updateAsientoInput: UpdateAsientoInput) {
-    return this.asientosService.update(updateAsientoInput.id, updateAsientoInput);
-  }
-
-  @Mutation(() => Asiento)
-  removeAsiento(@Args('id', { type: () => Int }) id: number) {
-    return this.asientosService.remove(id);
+  @Query(() => [AsientoType], { name: 'asientosBySala' })
+  async getAsientosBySala(@Args('salaId', { type: () => String }) salaId: string) {
+    return this.asientosService.findBySala(salaId);
   }
 }
