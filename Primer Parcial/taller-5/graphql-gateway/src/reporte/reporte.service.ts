@@ -1,26 +1,36 @@
-import { Injectable } from '@nestjs/common';
-import { CreateReporteInput } from './dto/create-reporte.input';
-import { UpdateReporteInput } from './dto/update-reporte.input';
+import { Injectable, HttpException } from '@nestjs/common';
+import { HttpService } from '@nestjs/axios';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable()
 export class ReporteService {
-  create(createReporteInput: CreateReporteInput) {
-    return 'This action adds a new reporte';
-  }
+    constructor(private readonly httpService: HttpService) { }
 
-  findAll() {
-    return `This action returns all reporte`;
-  }
+    async findAll() {
+        try {
+            const response = await firstValueFrom(
+                this.httpService.get('/reporte'),
+            );
+            return response.data;
+        } catch (error) {
+            throw new HttpException(
+                error.response?.data || 'Error al obtener reportes',
+                error.response?.status || 500,
+            );
+        }
+    }
 
-  findOne(id: number) {
-    return `This action returns a #${id} reporte`;
-  }
-
-  update(id: number, updateReporteInput: UpdateReporteInput) {
-    return `This action updates a #${id} reporte`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} reporte`;
-  }
+    async findOne(id: string) {
+        try {
+            const response = await firstValueFrom(
+                this.httpService.get(`/reporte/${id}`),
+            );
+            return response.data;
+        } catch (error) {
+            throw new HttpException(
+                error.response?.data || 'Error al obtener el reporte',
+                error.response?.status || 500,
+            );
+        }
+    }
 }
