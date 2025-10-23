@@ -1,36 +1,36 @@
 import { Injectable } from '@nestjs/common';
-import { HttpService } from '@nestjs/axios';
-import { firstValueFrom } from 'rxjs';
+import { FuncionesService } from '../funciones/funciones.service';
+import { PeliculasService } from '../peliculas/peliculas.service';
+import { SalasService } from '../salas/salas.service';
+import { ReservasService } from '../reservas/reservas.service';
+import { FacturasService } from '../facturas/facturas.service';
+import { ReservasAsientosService } from '../reservas-asientos/reservas-asientos.service';
+import { AsientosService } from '../asientos/asientos.service';
+import { UsersService } from '../users/users.service';
 
 @Injectable()
 export class DashboardService {
-  constructor(private readonly httpService: HttpService) {}
+  constructor(
+    private funcionesService: FuncionesService,
+    private peliculasService: PeliculasService,
+    private salasService: SalasService,
+    private reservasService: ReservasService,
+    private facturasService: FacturasService,
+    private reservasAsientosService: ReservasAsientosService,
+    private asientosService: AsientosService,
+    private usersService: UsersService,
+  ) {}
 
   // Query 1: Dashboard de Función con Película, Sala y Estado de Reservas
   async getFuncionDashboard(idFuncion: string) {
     // Obtener función
-    const funcionResponse = await firstValueFrom(
-      this.httpService.get(`/funcion/${idFuncion}`)
-    );
-    const funcion = funcionResponse.data;
-
+    const funcion = await this.funcionesService.findOne(idFuncion);
     // Obtener película
-    const peliculaResponse = await firstValueFrom(
-      this.httpService.get(`/peliculas/${funcion.pelicula.id_pelicula}`)
-    );
-    const pelicula = peliculaResponse.data;
-
+    const pelicula = await this.peliculasService.findOne(funcion.pelicula.id_pelicula);
     // Obtener sala
-    const salaResponse = await firstValueFrom(
-      this.httpService.get(`/salas/${funcion.sala.id_sala}`)
-    );
-    const sala = salaResponse.data;
-
+    const sala = await this.salasService.findOne(funcion.sala.id_sala);
     // Obtener reservas de esta función
-    const reservasResponse = await firstValueFrom(
-      this.httpService.get(`/reserva?funcion=${idFuncion}`)
-    );
-    const reservas = reservasResponse.data;
+    const reservas = await this.reservasService.findByFuncion(idFuncion);
 
     // Calcular métricas
     const totalReservas = reservas.length;
@@ -58,27 +58,13 @@ export class DashboardService {
   // Query 2: Reporte de Usuario con sus Reservas y Gastos
   async getUsuarioReporteCompleto(idUsuario: string, limite: number = 5) {
     // Obtener usuario
-    const usuarioResponse = await firstValueFrom(
-      this.httpService.get(`/users/${idUsuario}`)
-    );
-    const usuario = usuarioResponse.data;
-
+    const usuario = await this.usersService.findOne(idUsuario);
     // Obtener todas las reservas del usuario
-    const reservasResponse = await firstValueFrom(
-      this.httpService.get(`/reserva?usuario=${idUsuario}`)
-    );
-    const reservas = reservasResponse.data;
-
-    // Obtener facturas del usuario
-    const facturasResponse = await firstValueFrom(
-      this.httpService.get(`/factura`)
-    );
-    const todasFacturas = facturasResponse.data;
-    
+    const reservas = await this.reservasService.findByUsuario(idUsuario);
+    // Obtener todas las facturas
+    const todasFacturas = await this.facturasService.findAll();
     // Filtrar facturas del usuario
-    const facturas = todasFacturas.filter(f => 
-      reservas.some(r => r.id_reserva === f.reserva?.id_reserva)
-    );
+    const facturas = todasFacturas.filter(f => reservas.some(r => r.id_reserva === f.reserva?.id_reserva));
 
     // Calcular estadísticas
     const totalReservas = reservas.length;
@@ -90,38 +76,19 @@ export class DashboardService {
     const ultimasReservas = await Promise.all(
       reservas.slice(0, limite).map(async (reserva) => {
         // Obtener función
-        const funcionResponse = await firstValueFrom(
-          this.httpService.get(`/funcion/${reserva.funcion.id_funcion}`)
-        );
-        const funcion = funcionResponse.data;
-
+        const funcion = await this.funcionesService.findOne(reserva.funcion.id_funcion);
         // Obtener película
-        const peliculaResponse = await firstValueFrom(
-          this.httpService.get(`/peliculas/${funcion.pelicula.id_pelicula}`)
-        );
-        const pelicula = peliculaResponse.data;
-
+        const pelicula = await this.peliculasService.findOne(funcion.pelicula.id_pelicula);
         // Obtener sala
-        const salaResponse = await firstValueFrom(
-          this.httpService.get(`/salas/${funcion.sala.id_sala}`)
-        );
-        const sala = salaResponse.data;
-
+        const sala = await this.salasService.findOne(funcion.sala.id_sala);
         // Obtener factura si existe
         const factura = facturas.find(f => f.reserva?.id_reserva === reserva.id_reserva);
-
         // Obtener asientos reservados
-        const asientosResponse = await firstValueFrom(
-          this.httpService.get(`/reserva-asiento?reserva=${reserva.id_reserva}`)
-        );
-        const reservasAsientos = asientosResponse.data;
-
+        const reservasAsientos = await this.reservasAsientosService.findByReserva(reserva.id_reserva);
         const numerosAsientos = await Promise.all(
           reservasAsientos.map(async (ra) => {
-            const asientoResponse = await firstValueFrom(
-              this.httpService.get(`/asiento/${ra.asiento.id_asiento}`)
-            );
-            return asientoResponse.data.numero;
+            const asiento = await this.asientosService.findOne(ra.asiento.id_asiento);
+            return asiento.numero;
           })
         );
 
@@ -155,23 +122,11 @@ export class DashboardService {
   // Query 3: Vista de Película con Todas sus Funciones y Rendimiento
   async getPeliculaRendimiento(idPelicula: string) {
     // Obtener película
-    const peliculaResponse = await firstValueFrom(
-      this.httpService.get(`/peliculas/${idPelicula}`)
-    );
-    const pelicula = peliculaResponse.data;
-
+    const pelicula = await this.peliculasService.findOne(idPelicula);
     // Obtener todas las funciones de la película
-    const funcionesResponse = await firstValueFrom(
-      this.httpService.get(`/funcion?pelicula=${idPelicula}`)
-    );
-    const funciones = funcionesResponse.data;
-
+    const funciones = await this.funcionesService.findByPelicula(idPelicula);
     // Obtener todas las reservas
-    const reservasResponse = await firstValueFrom(
-      this.httpService.get(`/reserva`)
-    );
-    const todasReservas = reservasResponse.data;
-
+    const todasReservas = await this.reservasService.findAll();
     // Calcular métricas generales
     const totalFunciones = funciones.length;
     const funcionesActivas = funciones.filter(f => new Date(f.fecha_hora) > new Date()).length;
@@ -184,11 +139,7 @@ export class DashboardService {
     const funcionesResumen = await Promise.all(
       funciones.map(async (funcion) => {
         // Obtener sala
-        const salaResponse = await firstValueFrom(
-          this.httpService.get(`/salas/${funcion.sala.id_sala}`)
-        );
-        const sala = salaResponse.data;
-
+        const sala = await this.salasService.findOne(funcion.sala.id_sala);
         // Filtrar reservas de esta función
         const reservasFuncion = todasReservas.filter(
           r => r.funcion.id_funcion === funcion.id_funcion
