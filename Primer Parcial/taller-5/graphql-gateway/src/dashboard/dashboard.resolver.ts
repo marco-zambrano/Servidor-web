@@ -1,7 +1,7 @@
 import { Resolver, Query, Args, Int } from '@nestjs/graphql';
-import { FuncionDashboardType } from '../inputs/funcion-dashboard.input';
-import { UsuarioReporteCompletoType } from '../inputs/usuario-reporte-completo.input';
-import { PeliculaRendimientoType } from '../inputs/pelicula-rendimiento.input';
+import { FuncionDashboardType } from '../inputs/dashboard/funcion-dashboard.input';
+import { UsuarioReporteCompletoType } from '../inputs/dashboard/usuario-reporte-completo.input';
+import { PeliculaRendimientoType } from '../inputs/dashboard/pelicula-rendimiento.input';
 import { DashboardService } from './dashboard.service';
 
 @Resolver()
