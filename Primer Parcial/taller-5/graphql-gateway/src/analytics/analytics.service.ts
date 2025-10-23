@@ -1,52 +1,52 @@
 import { Injectable } from '@nestjs/common';
-import { AnalyticsIntegrante1Service } from './analytics-integrante1.service';
-import { AnalyticsIntegrante2Service } from './analytics-integrante2.service';
-import { AnalyticsIntegrante3Service } from './analytics-integrante3.service';
+import { AnalyticsMarcoService } from './analytics-marco.service';
+import { AnalyticsJostinService } from './analytics-jostin.service';
+import { AnalyticsJeremyService } from './analytics-jeremy.service';
 
 @Injectable()
 export class AnalyticsService {
     constructor(
-        private readonly integrante1Service: AnalyticsIntegrante1Service,
-        private readonly integrante2Service: AnalyticsIntegrante2Service,
-        private readonly integrante3Service: AnalyticsIntegrante3Service,
+        private readonly marcoService: AnalyticsMarcoService,
+        private readonly jostinService: AnalyticsJostinService,
+        private readonly jeremyService: AnalyticsJeremyService,
     ) { }
 
-    // INTEGRANTE 1: Consultas de Información Agregada
+    // INTEGRANTE Marco: Consultas de Información Agregada
     async getCarteleraCompleta() {
-        return this.integrante1Service.getCarteleraCompleta();
+        return this.marcoService.getCarteleraCompleta();
     }
 
     async getOcupacionSalas() {
-        return this.integrante1Service.getOcupacionSalas();
+        return this.marcoService.getOcupacionSalas();
     }
 
     async getHistorialUsuario(usuarioId: string) {
-        return this.integrante1Service.getHistorialUsuario(usuarioId);
+        return this.marcoService.getHistorialUsuario(usuarioId);
     }
 
-    // INTEGRANTE 2: Consultas de Análisis de Negocio
+    // INTEGRANTE Jostin: Consultas de Análisis de Negocio
     async getPeliculasMasPopulares(limite: number) {
-        return this.integrante2Service.getPeliculasMasPopulares(limite);
+        return this.jostinService.getPeliculasMasPopulares(limite);
     }
 
     async getRendimientoPorHorario() {
-        return this.integrante2Service.getRendimientoPorHorario();
+        return this.jostinService.getRendimientoPorHorario();
     }
 
     async getAnalisisIngresos(fechaInicio: Date, fechaFin: Date) {
-        return this.integrante2Service.getAnalisisIngresos(fechaInicio, fechaFin);
+        return this.jostinService.getAnalisisIngresos(fechaInicio, fechaFin);
     }
 
-    // INTEGRANTE 3: Consultas de Búsqueda y Filtrado Avanzado
+    // INTEGRANTE Jeremy: Consultas de Búsqueda y Filtrado Avanzado
     async buscarFunciones(filtros: any) {
-        return this.integrante3Service.buscarFunciones(filtros);
+        return this.jeremyService.buscarFunciones(filtros);
     }
 
     async getClientesFrecuentes(filtros: any) {
-        return this.integrante3Service.getClientesFrecuentes(filtros);
+        return this.jeremyService.getClientesFrecuentes(filtros);
     }
 
     async getDisponibilidadFunciones(filtros: any) {
-        return this.integrante3Service.getDisponibilidadFunciones(filtros);
+        return this.jeremyService.getDisponibilidadFunciones(filtros);
     }
 }

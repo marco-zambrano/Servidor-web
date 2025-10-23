@@ -18,7 +18,7 @@ import {
 } from '../types/busqueda.type';
 
 @Injectable()
-export class AnalyticsIntegrante3Service {
+export class AnalyticsJeremyService {
     constructor(
         private readonly peliculasService: PeliculasService,
         private readonly funcionService: FuncionService,

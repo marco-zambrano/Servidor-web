@@ -13,7 +13,7 @@ import {
 } from '../types/analytics.type';
 
 @Injectable()
-export class AnalyticsIntegrante2Service {
+export class AnalyticsJostinService {
     constructor(
         private readonly peliculasService: PeliculasService,
         private readonly funcionService: FuncionService,

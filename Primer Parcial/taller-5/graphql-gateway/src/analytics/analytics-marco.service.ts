@@ -17,7 +17,7 @@ import {
 } from '../types/cartelera.type';
 
 @Injectable()
-export class AnalyticsIntegrante1Service {
+export class AnalyticsMarcoService {
     constructor(
         private readonly peliculasService: PeliculasService,
         private readonly funcionService: FuncionService,
