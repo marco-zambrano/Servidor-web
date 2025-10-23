@@ -1,91 +1,52 @@
 import { Injectable } from '@nestjs/common';
-import { PeliculasService } from '../peliculas/peliculas.service';
-import { FuncionService } from '../funcion/funcion.service';
-import { SalasService } from '../salas/salas.service';
-import { ReservaService } from '../reserva/reserva.service';
-import { AsientoService } from '../asiento/asiento.service';
-import { UsersService } from '../users/users.service';
-import { FacturaService } from '../factura/factura.service';
-import { ReservaAsientoService } from '../reserva-asiento/reserva-asiento.service';
+import { AnalyticsIntegrante1Service } from './analytics-integrante1.service';
+import { AnalyticsIntegrante2Service } from './analytics-integrante2.service';
+import { AnalyticsIntegrante3Service } from './analytics-integrante3.service';
 
 @Injectable()
 export class AnalyticsService {
     constructor(
-        private readonly peliculasService: PeliculasService,
-        private readonly funcionService: FuncionService,
-        private readonly salasService: SalasService,
-        private readonly reservaService: ReservaService,
-        private readonly asientoService: AsientoService,
-        private readonly usersService: UsersService,
-        private readonly facturaService: FacturaService,
-        private readonly reservaAsientoService: ReservaAsientoService,
+        private readonly integrante1Service: AnalyticsIntegrante1Service,
+        private readonly integrante2Service: AnalyticsIntegrante2Service,
+        private readonly integrante3Service: AnalyticsIntegrante3Service,
     ) { }
 
-    // Los métodos se implementarán aquí
-    // Por ahora retornamos datos de ejemplo para que compile
-
+    // INTEGRANTE 1: Consultas de Información Agregada
     async getCarteleraCompleta() {
-        // TODO: Implementar lógica completa
-        return [];
+        return this.integrante1Service.getCarteleraCompleta();
     }
 
     async getOcupacionSalas() {
-        // TODO: Implementar lógica completa
-        return [];
+        return this.integrante1Service.getOcupacionSalas();
     }
 
     async getHistorialUsuario(usuarioId: string) {
-        const usuario = await this.usersService.findOne(usuarioId);
-        return {
-            id_usuario: usuario.id_usuario,
-            nombre: usuario.nombre,
-            correo: usuario.correo,
-            totalReservas: 0,
-            gastoTotal: 0,
-            reservas: [],
-        };
+        return this.integrante1Service.getHistorialUsuario(usuarioId);
     }
 
+    // INTEGRANTE 2: Consultas de Análisis de Negocio
     async getPeliculasMasPopulares(limite: number) {
-        // TODO: Implementar lógica completa
-        return [];
+        return this.integrante2Service.getPeliculasMasPopulares(limite);
     }
 
     async getRendimientoPorHorario() {
-        // TODO: Implementar lógica completa
-        return [];
+        return this.integrante2Service.getRendimientoPorHorario();
     }
 
     async getAnalisisIngresos(fechaInicio: Date, fechaFin: Date) {
-        // TODO: Implementar lógica completa
-        return {
-            periodo: '',
-            ingresosTotales: 0,
-            totalReservas: 0,
-            totalAsientosVendidos: 0,
-            ticketPromedio: 0,
-            ingresoPromedioPorDia: 0,
-            desglosePorPelicula: [],
-            desglosePorSala: [],
-        };
+        return this.integrante2Service.getAnalisisIngresos(fechaInicio, fechaFin);
     }
 
+    // INTEGRANTE 3: Consultas de Búsqueda y Filtrado Avanzado
     async buscarFunciones(filtros: any) {
-        // TODO: Implementar lógica completa
-        return [];
+        return this.integrante3Service.buscarFunciones(filtros);
     }
 
     async getClientesFrecuentes(filtros: any) {
-        // TODO: Implementar lógica completa
-        return [];
+        return this.integrante3Service.getClientesFrecuentes(filtros);
     }
 
     async getDisponibilidadFunciones(filtros: any) {
-        // TODO: Implementar lógica completa
-        return {
-            fecha: new Date(),
-            totalFuncionesDisponibles: 0,
-            funciones: [],
-        };
+        return this.integrante3Service.getDisponibilidadFunciones(filtros);
     }
 }
