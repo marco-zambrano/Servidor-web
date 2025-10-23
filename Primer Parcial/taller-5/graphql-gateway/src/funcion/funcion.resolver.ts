@@ -1,35 +1,50 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Args, ID, ResolveField, Parent } from '@nestjs/graphql';
 import { FuncionService } from './funcion.service';
-import { Funcion } from './entities/funcion.entity';
-import { CreateFuncionInput } from './dto/create-funcion.input';
-import { UpdateFuncionInput } from './dto/update-funcion.input';
+import { PeliculasService } from '../peliculas/peliculas.service';
+import { SalasService } from '../salas/salas.service';
+import { ReservaService } from '../reserva/reserva.service';
+import { FuncionType } from '../types/funcion.type';
+import { PeliculaType } from '../types/pelicula.type';
+import { SalaType } from '../types/sala.type';
+import { ReservaType } from '../types/reserva.type';
 
-@Resolver(() => Funcion)
+@Resolver(() => FuncionType)
 export class FuncionResolver {
-  constructor(private readonly funcionService: FuncionService) {}
+  constructor(
+    private readonly funcionService: FuncionService,
+    private readonly peliculasService: PeliculasService,
+    private readonly salasService: SalasService,
+    private readonly reservaService: ReservaService,
+  ) {}
 
-  @Mutation(() => Funcion)
-  createFuncion(@Args('createFuncionInput') createFuncionInput: CreateFuncionInput) {
-    return this.funcionService.create(createFuncionInput);
-  }
-
-  @Query(() => [Funcion], { name: 'funcion' })
+  @Query(() => [FuncionType], { name: 'funciones' })
   findAll() {
     return this.funcionService.findAll();
   }
 
-  @Query(() => Funcion, { name: 'funcion' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  @Query(() => FuncionType, { name: 'funcion' })
+  findOne(@Args('id', { type: () => ID }) id: string) {
     return this.funcionService.findOne(id);
   }
 
-  @Mutation(() => Funcion)
-  updateFuncion(@Args('updateFuncionInput') updateFuncionInput: UpdateFuncionInput) {
-    return this.funcionService.update(updateFuncionInput.id, updateFuncionInput);
+  @ResolveField(() => PeliculaType, { nullable: true })
+  async pelicula(@Parent() funcion: FuncionType) {
+    if (funcion.pelicula?.id_pelicula) {
+      return this.peliculasService.findOne(funcion.pelicula.id_pelicula);
+    }
+    return null;
   }
 
-  @Mutation(() => Funcion)
-  removeFuncion(@Args('id', { type: () => Int }) id: number) {
-    return this.funcionService.remove(id);
+  @ResolveField(() => SalaType, { nullable: true })
+  async sala(@Parent() funcion: FuncionType) {
+    if (funcion.sala?.id_sala) {
+      return this.salasService.findOne(funcion.sala.id_sala);
+    }
+    return null;
+  }
+
+  @ResolveField(() => [ReservaType], { nullable: true })
+  async reservas(@Parent() funcion: FuncionType) {
+    return this.reservaService.findByFuncion(funcion.id_funcion);
   }
 }

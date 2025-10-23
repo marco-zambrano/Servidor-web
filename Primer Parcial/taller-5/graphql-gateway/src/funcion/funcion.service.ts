@@ -1,26 +1,33 @@
 import { Injectable } from '@nestjs/common';
-import { CreateFuncionInput } from './dto/create-funcion.input';
-import { UpdateFuncionInput } from './dto/update-funcion.input';
+import { HttpService } from '@nestjs/axios';
+import { firstValueFrom } from 'rxjs';
+import { FuncionType } from '../types/funcion.type';
 
 @Injectable()
 export class FuncionService {
-  create(createFuncionInput: CreateFuncionInput) {
-    return 'This action adds a new funcion';
+  constructor(private readonly httpService: HttpService) {}
+
+  async findAll(): Promise<FuncionType[]> {
+    const response = await firstValueFrom(
+      this.httpService.get('/funcion')
+    );
+    return response.data;
   }
 
-  findAll() {
-    return `This action returns all funcion`;
+  async findOne(id: string): Promise<FuncionType> {
+    const response = await firstValueFrom(
+      this.httpService.get(`/funcion/${id}`)
+    );
+    return response.data;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} funcion`;
+  async findByPelicula(peliculaId: string): Promise<FuncionType[]> {
+    const funciones = await this.findAll();
+    return funciones.filter(f => f.pelicula?.id_pelicula === peliculaId);
   }
 
-  update(id: number, updateFuncionInput: UpdateFuncionInput) {
-    return `This action updates a #${id} funcion`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} funcion`;
+  async findBySala(salaId: string): Promise<FuncionType[]> {
+    const funciones = await this.findAll();
+    return funciones.filter(f => f.sala?.id_sala === salaId);
   }
 }
