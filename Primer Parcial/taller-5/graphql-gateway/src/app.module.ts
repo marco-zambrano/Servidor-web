@@ -14,8 +14,6 @@ import { AsientosModule } from './asientos/asientos.module';
 import { UsersModule } from './users/users.module';
 import { SalasModule } from './salas/salas.module';
 import { DashboardModule } from './dashboard/dashboard.module';
-import { AnalyticsModule } from './analytics/analytics.module';
-import { SearchModule } from './search/search.module';
 
 @Module({
   imports: [
@@ -26,7 +24,7 @@ import { SearchModule } from './search/search.module';
       playground: true, // Apollo Playground
     }),
     HttpModule.register({
-      baseURL: 'http://localhost:3000', // URL del servicio REST
+      baseURL: 'http://localhost:3000/api', // URL del servicio REST
       timeout: 5000,
       maxRedirects: 5,
     }),
@@ -40,8 +38,6 @@ import { SearchModule } from './search/search.module';
     FacturasModule,
     ReportesModule,
     DashboardModule,
-    AnalyticsModule,
-    SearchModule,
   ],
   providers: [],
 })

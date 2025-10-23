@@ -7,6 +7,6 @@ import { UsersResolver } from './users.resolver';
 @Module({
   imports: [HttpModule],
   providers: [UsersService, UsersResolver],
-  exports: [UsersService], // Para usar en otros módulos
+  exports: [UsersService],
 })
 export class UsersModule {}
