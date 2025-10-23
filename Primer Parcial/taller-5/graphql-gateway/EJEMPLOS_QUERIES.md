@@ -4,7 +4,7 @@ Este documento contiene ejemplos prácticos de cómo usar cada una de las 9 quer
 
 ---
 
-## 🎬 INTEGRANTE 1: Consultas de Información Agregada
+##  MARCO: Consultas de Información Agregada
 
 ### Query 1: Cartelera Completa
 
@@ -112,7 +112,7 @@ query {
 
 ---
 
-## 📊 INTEGRANTE 2: Consultas de Análisis de Negocio
+## JOSTIN: Consultas de Análisis de Negocio
 
 ### Query 4: Películas Más Populares
 
@@ -199,11 +199,11 @@ query {
 
 ---
 
-## 🔍 INTEGRANTE 3: Consultas de Búsqueda y Filtrado Avanzado
+## JEREMY: Consultas de Búsqueda y Filtrado Avanzado
 
 ### Query 7: Búsqueda Avanzada de Funciones
 
-**Ejemplo 1: Buscar funciones de acción con precio entre $5 y $15**
+**Ejemplo: Buscar funciones de acción con precio entre $5 y $15**
 
 ```graphql
 query {
@@ -230,35 +230,11 @@ query {
 }
 ```
 
-**Ejemplo 2: Funciones del fin de semana con al menos 20 asientos disponibles**
-
-```graphql
-query {
-  buscarFunciones(filtros: {
-    fechaInicio: "2025-10-25"
-    fechaFin: "2025-10-27"
-    asientosMinimosDisponibles: 20
-    ordenarPor: "fecha"
-    orden: "ASC"
-  }) {
-    id_funcion
-    fecha_hora
-    precio
-    pelicula {
-      titulo
-    }
-    nombreSala
-    asientosDisponibles
-    porcentajeDisponibilidad
-  }
-}
-```
-
 ---
 
 ### Query 8: Clientes Frecuentes
 
-**Ejemplo 1: Top 10 clientes VIP (más de 5 reservas y $50 gastados)**
+**Ejemplo: Top 10 clientes VIP (más de 5 reservas y $50 gastados)**
 
 ```graphql
 query {
@@ -284,31 +260,11 @@ query {
 }
 ```
 
-**Ejemplo 2: Clientes frecuentes del último trimestre**
-
-```graphql
-query {
-  clientesFrecuentes(filtros: {
-    fechaInicio: "2025-07-01"
-    fechaFin: "2025-09-30"
-    minimoReservas: 3
-    limite: 20
-  }) {
-    nombre
-    correo
-    totalReservas
-    gastoTotal
-    generosPreferidos
-    diasDesdeUltimaReserva
-  }
-}
-```
-
 ---
 
 ### Query 9: Disponibilidad con Recomendaciones
 
-**Ejemplo 1: Buscar función para familia (4 personas, presupuesto $60)**
+**Ejemplo: Buscar función para familia (4 personas, presupuesto $60)**
 
 ```graphql
 query {
@@ -346,41 +302,9 @@ query {
 }
 ```
 
-**Ejemplo 2: Funciones de terror disponibles hoy**
-
-```graphql
-query {
-  disponibilidadFunciones(filtros: {
-    fecha: "2025-10-23"
-    genero: "Terror"
-    asientosRequeridos: 2
-  }) {
-    fecha
-    totalFuncionesDisponibles
-    funciones {
-      funcion {
-        fecha_hora
-        precio
-        pelicula {
-          titulo
-          clasificacion
-        }
-        sala {
-          nombre
-        }
-      }
-      asientosDisponibles
-      costoTotal
-      recomendada
-      razonRecomendacion
-    }
-  }
-}
-```
-
 ---
 
-## 🎯 Casos de Uso Combinados
+## Casos de Uso Combinados
 
 ### Caso 1: Usuario busca película para ver con amigos
 
@@ -467,29 +391,3 @@ query {
   }
 }
 ```
-
----
-
-## 💡 Tips de Uso
-
-1. **Cartelera Completa**: Úsala para la página principal del sitio web
-2. **Ocupación de Salas**: Ideal para reportes gerenciales diarios
-3. **Historial de Usuario**: Implementa en el perfil de usuario
-4. **Películas Populares**: Actualiza semanalmente para destacar en homepage
-5. **Rendimiento por Horario**: Usa para ajustar precios dinámicos
-6. **Análisis de Ingresos**: Genera reportes mensuales automáticos
-7. **Búsqueda Avanzada**: Motor de búsqueda principal del sitio
-8. **Clientes Frecuentes**: Segmenta para campañas de email marketing
-9. **Disponibilidad**: Asistente inteligente de reservas
-
----
-
-## 🚀 Próximos Pasos
-
-1. Inicia tu servidor GraphQL: `npm run start:dev`
-2. Accede al playground: `http://localhost:3001/graphql`
-3. Copia cualquiera de estos ejemplos
-4. Ajusta los parámetros según tus datos
-5. Explora las relaciones anidadas
-
-**¡Todas las queries están completamente implementadas y listas para usar!** 🎉

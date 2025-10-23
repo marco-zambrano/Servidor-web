@@ -11,7 +11,7 @@ export class AnalyticsService {
         private readonly jeremyService: AnalyticsJeremyService,
     ) { }
 
-    // INTEGRANTE Marco: Consultas de Información Agregada
+    // Marco: Consultas de Información Agregada
     async getCarteleraCompleta() {
         return this.marcoService.getCarteleraCompleta();
     }
@@ -24,7 +24,7 @@ export class AnalyticsService {
         return this.marcoService.getHistorialUsuario(usuarioId);
     }
 
-    // INTEGRANTE Jostin: Consultas de Análisis de Negocio
+    // Jostin: Consultas de Análisis de Negocio
     async getPeliculasMasPopulares(limite: number) {
         return this.jostinService.getPeliculasMasPopulares(limite);
     }
@@ -37,7 +37,7 @@ export class AnalyticsService {
         return this.jostinService.getAnalisisIngresos(fechaInicio, fechaFin);
     }
 
-    // INTEGRANTE Jeremy: Consultas de Búsqueda y Filtrado Avanzado
+    // Jeremy: Consultas de Búsqueda y Filtrado Avanzado
     async buscarFunciones(filtros: any) {
         return this.jeremyService.buscarFunciones(filtros);
     }

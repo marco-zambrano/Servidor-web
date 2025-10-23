@@ -1,9 +1,11 @@
 import { Module } from '@nestjs/common';
+
 import { AnalyticsResolver } from './analytics.resolver';
 import { AnalyticsService } from './analytics.service';
 import { AnalyticsMarcoService } from './analytics-marco.service';
 import { AnalyticsJostinService } from './analytics-jostin.service';
 import { AnalyticsJeremyService } from './analytics-jeremy.service';
+
 import { PeliculasModule } from '../peliculas/peliculas.module';
 import { FuncionModule } from '../funcion/funcion.module';
 import { SalasModule } from '../salas/salas.module';

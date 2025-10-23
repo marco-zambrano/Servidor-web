@@ -23,14 +23,8 @@ import {
 export class AnalyticsResolver {
     constructor(private readonly analyticsService: AnalyticsService) { }
 
-    // ============================================
-    // INTEGRANTE 1: CONSULTAS DE INFORMACIÓN AGREGADA
-    // ============================================
-
-    /**
-     * Query 1: Cartelera completa con información de películas, funciones y disponibilidad
-     * Combina: Películas + Funciones + Salas + Reservas
-     */
+    // Marco: CONSULTAS DE INFORMACIÓN AGREGADA
+    // Query 1
     @Query(() => [CarteleraType], {
         name: 'carteleraCompleta',
         description: 'Obtiene la cartelera completa con todas las funciones disponibles, precios y disponibilidad de asientos',
@@ -39,10 +33,7 @@ export class AnalyticsResolver {
         return this.analyticsService.getCarteleraCompleta();
     }
 
-    /**
-     * Query 2: Ocupación de salas con estadísticas detalladas
-     * Combina: Salas + Funciones + Reservas + Asientos
-     */
+    // Query 2
     @Query(() => [OcupacionSalaType], {
         name: 'ocupacionSalas',
         description: 'Análisis de ocupación de todas las salas con porcentajes y detalles de funciones',
@@ -51,10 +42,7 @@ export class AnalyticsResolver {
         return this.analyticsService.getOcupacionSalas();
     }
 
-    /**
-     * Query 3: Historial completo de reservas de un usuario
-     * Combina: Usuario + Reservas + Funciones + Películas + Salas + Facturas + Asientos
-     */
+    // Query 3
     @Query(() => HistorialUsuarioType, {
         name: 'historialUsuario',
         description: 'Historial completo de un usuario con todas sus reservas, películas vistas y gastos',
@@ -65,14 +53,9 @@ export class AnalyticsResolver {
         return this.analyticsService.getHistorialUsuario(usuarioId);
     }
 
-    // ============================================
-    // INTEGRANTE 2: CONSULTAS DE ANÁLISIS DE NEGOCIO
-    // ============================================
 
-    /**
-     * Query 4: Películas más populares con métricas de rendimiento
-     * Calcula: Total de reservas, ingresos, tasa de ocupación, promedio de asientos
-     */
+    // Jostin: CONSULTAS DE ANÁLISIS DE NEGOCIO
+    // Query 4
     @Query(() => [PeliculaPopularType], {
         name: 'peliculasMasPopulares',
         description: 'Top de películas más populares con estadísticas de ventas y ocupación',
@@ -83,10 +66,7 @@ export class AnalyticsResolver {
         return this.analyticsService.getPeliculasMasPopulares(limite);
     }
 
-    /**
-     * Query 5: Rendimiento de funciones por horario
-     * Calcula: Ingresos por rango horario, promedio de ocupación, películas más vistas
-     */
+    // Query 5
     @Query(() => [RendimientoHorarioType], {
         name: 'rendimientoPorHorario',
         description: 'Análisis de rendimiento de funciones agrupadas por rangos horarios (mañana, tarde, noche)',
@@ -95,10 +75,7 @@ export class AnalyticsResolver {
         return this.analyticsService.getRendimientoPorHorario();
     }
 
-    /**
-     * Query 6: Análisis de ingresos por período con KPIs
-     * Calcula: Ingresos totales, ticket promedio, ingresos por día, desglose por película y sala
-     */
+    // Query 6
     @Query(() => AnalisisIngresosType, {
         name: 'analisisIngresos',
         description: 'Análisis completo de ingresos con KPIs y desgloses por película y sala',
@@ -110,15 +87,9 @@ export class AnalyticsResolver {
         return this.analyticsService.getAnalisisIngresos(fechaInicio, fechaFin);
     }
 
-    // ============================================
-    // INTEGRANTE 3: CONSULTAS DE BÚSQUEDA Y FILTRADO AVANZADO
-    // ============================================
 
-    /**
-     * Query 7: Búsqueda avanzada de funciones con múltiples filtros
-     * Filtros: Película, género, sala, rango de fechas, precio, disponibilidad
-     * Incluye: Ordenamiento y paginación
-     */
+    // Jeremy: CONSULTAS DE BÚSQUEDA Y FILTRADO AVANZADO
+    // Query 7
     @Query(() => [FuncionBusquedaType], {
         name: 'buscarFunciones',
         description: 'Búsqueda avanzada de funciones con filtros múltiples, ordenamiento y disponibilidad en tiempo real',
@@ -129,11 +100,7 @@ export class AnalyticsResolver {
         return this.analyticsService.buscarFunciones(filtros);
     }
 
-    /**
-     * Query 8: Clientes frecuentes con análisis de comportamiento
-     * Filtros: Mínimo de reservas, gasto mínimo, período
-     * Incluye: Géneros preferidos, películas más vistas, días desde última reserva
-     */
+    // Query 8
     @Query(() => [ClienteFrecuenteType], {
         name: 'clientesFrecuentes',
         description: 'Análisis de clientes frecuentes con patrones de consumo y preferencias',
@@ -144,11 +111,7 @@ export class AnalyticsResolver {
         return this.analyticsService.getClientesFrecuentes(filtros);
     }
 
-    /**
-     * Query 9: Disponibilidad de funciones con recomendaciones
-     * Filtros: Fecha, género, clasificación, asientos requeridos, presupuesto
-     * Incluye: Recomendaciones inteligentes basadas en criterios
-     */
+    // Query 9
     @Query(() => DisponibilidadFuncionType, {
         name: 'disponibilidadFunciones',
         description: 'Consulta de disponibilidad de funciones con filtros avanzados y recomendaciones inteligentes',

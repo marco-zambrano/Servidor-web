@@ -1,10 +1,10 @@
-# 🎬 GraphQL Gateway - Sistema de Gestión de Reservas de Cine
+# GraphQL Gateway - Sistema de Gestión de Reservas de Cine
 
-## 📋 Descripción del Proyecto
+## Descripción del Proyecto
 
 Este proyecto es un **GraphQL Gateway** desarrollado con **NestJS** que consume una API REST existente para proporcionar una interfaz GraphQL moderna y eficiente para un sistema de gestión de reservas de cine.
 
-### 🎯 Objetivos Cumplidos
+### Objetivos Cumplidos
 
 ✅ Gateway GraphQL que consume API REST completa  
 ✅ 9 queries ingeniosas distribuidas en 3 categorías  
@@ -14,7 +14,7 @@ Este proyecto es un **GraphQL Gateway** desarrollado con **NestJS** que consume 
 
 ---
 
-## 🏗️ Arquitectura del Proyecto
+## Arquitectura del Proyecto
 
 ```
 graphql-gateway/
@@ -36,9 +36,9 @@ graphql-gateway/
 │   │   ├── analytics.module.ts
 │   │   ├── analytics.resolver.ts
 │   │   ├── analytics.service.ts
-│   │   ├── analytics-integrante1.service.ts
-│   │   ├── analytics-integrante2.service.ts
-│   │   └── analytics-integrante3.service.ts
+│   │   ├── analytics-marco.service.ts
+│   │   ├── analytics-jostin.service.ts
+│   │   └── analytics-jeremy.service.ts
 │   │
 │   ├── peliculas/               # Módulo de películas
 │   ├── funciones/               # Módulo de funciones
@@ -56,7 +56,7 @@ graphql-gateway/
 
 ---
 
-## 🚀 Instalación y Configuración
+## Instalación y Configuración
 
 ### Prerrequisitos
 
@@ -81,9 +81,9 @@ El servidor GraphQL estará disponible en: **http://localhost:3001/graphql**
 
 ---
 
-## 📊 Queries Implementadas
+##  Queries Implementadas
 
-### 🎯 INTEGRANTE 1: Información Agregada (3 queries)
+### Marco: Información Agregada (3 queries)
 
 | Query | Descripción | Entidades Combinadas |
 |-------|-------------|---------------------|
@@ -91,7 +91,7 @@ El servidor GraphQL estará disponible en: **http://localhost:3001/graphql**
 | `ocupacionSalas` | Análisis de ocupación de salas | Salas + Funciones + Reservas + Asientos |
 | `historialUsuario` | Historial completo de un usuario | Usuario + Reservas + Funciones + Películas + Salas + Facturas |
 
-### 📈 INTEGRANTE 2: Análisis de Negocio (3 queries)
+### Jostin: Análisis de Negocio (3 queries)
 
 | Query | Descripción | Métricas Calculadas |
 |-------|-------------|---------------------|
@@ -99,7 +99,7 @@ El servidor GraphQL estará disponible en: **http://localhost:3001/graphql**
 | `rendimientoPorHorario` | Análisis por franjas horarias | Ingresos por horario, ocupación promedio |
 | `analisisIngresos` | KPIs financieros por período | Ticket promedio, ingresos por día, desgloses |
 
-### 🔍 INTEGRANTE 3: Búsqueda y Filtrado (3 queries)
+### Jeremy: Búsqueda y Filtrado (3 queries)
 
 | Query | Descripción | Características |
 |-------|-------------|----------------|
@@ -109,7 +109,7 @@ El servidor GraphQL estará disponible en: **http://localhost:3001/graphql**
 
 ---
 
-## 🎨 Tecnologías Utilizadas
+## Tecnologías Utilizadas
 
 - **NestJS** - Framework backend
 - **GraphQL** - API Query Language
@@ -120,7 +120,7 @@ El servidor GraphQL estará disponible en: **http://localhost:3001/graphql**
 
 ---
 
-## 📖 Documentación
+## Documentación
 
 ### Archivos de Documentación
 
@@ -138,9 +138,9 @@ El servidor GraphQL estará disponible en: **http://localhost:3001/graphql**
 
 ---
 
-## 🎯 Características Principales
+## Características Principales
 
-### ✨ Queries Simples (CRUD Básico)
+### Queries Simples (CRUD Básico)
 
 Cada recurso tiene queries básicas:
 - `peliculas` / `pelicula(id)`
@@ -151,7 +151,7 @@ Cada recurso tiene queries básicas:
 - `users` / `user(id)`
 - `facturas` / `factura(id)`
 
-### 🔗 Relaciones GraphQL
+### Relaciones GraphQL
 
 Todas las relaciones están implementadas con Field Resolvers:
 - Película → Funciones
@@ -160,13 +160,13 @@ Todas las relaciones están implementadas con Field Resolvers:
 - Reserva → Función, Usuario, Factura, Asientos
 - Usuario → Reservas
 
-### 🚀 Queries Complejas
+### Queries Complejas
 
 9 queries avanzadas que combinan múltiples recursos y calculan métricas en tiempo real.
 
 ---
 
-## 💡 Ejemplos de Uso Rápido
+## Ejemplos de Uso Rápido
 
 ### Obtener Cartelera Completa
 
@@ -226,7 +226,7 @@ query {
 
 ---
 
-## 🧪 Testing
+## Testing
 
 ### Probar en GraphQL Playground
 
@@ -241,7 +241,7 @@ Asegúrate de que la API REST esté corriendo en `http://localhost:3000` antes d
 
 ---
 
-## 📊 Estructura de Datos
+## Estructura de Datos
 
 ### Entidades Principales
 
@@ -256,26 +256,26 @@ Asegúrate de que la API REST esté corriendo en `http://localhost:3000` antes d
 
 ---
 
-## 🎓 Distribución del Trabajo
+## Distribución del Trabajo
 
-### Integrante 1 - Información Agregada
+### Marco - Información Agregada
 - ✅ Query 1: Cartelera Completa
 - ✅ Query 2: Ocupación de Salas
 - ✅ Query 3: Historial de Usuario
 
-### Integrante 2 - Análisis de Negocio
+### Jostin - Análisis de Negocio
 - ✅ Query 4: Películas Más Populares
 - ✅ Query 5: Rendimiento por Horario
 - ✅ Query 6: Análisis de Ingresos
 
-### Integrante 3 - Búsqueda y Filtrado
+### Jeremy - Búsqueda y Filtrado
 - ✅ Query 7: Búsqueda Avanzada de Funciones
 - ✅ Query 8: Clientes Frecuentes
 - ✅ Query 9: Disponibilidad con Recomendaciones
 
 ---
 
-## 🔧 Configuración
+## Configuración
 
 ### Variables de Entorno
 
@@ -299,7 +299,7 @@ HttpModule.registerAsync({
 
 ---
 
-## 📝 Scripts Disponibles
+## Scripts Disponibles
 
 ```bash
 # Desarrollo
@@ -316,7 +316,7 @@ npm run lint           # Ejecuta el linter
 
 ---
 
-## 🎉 Estado del Proyecto
+## Estado del Proyecto
 
 ### ✅ Completado
 
@@ -328,13 +328,13 @@ npm run lint           # Ejecuta el linter
 - [x] Documentación completa
 - [x] Ejemplos de uso
 
-### 🚀 Listo para Usar
+### Listo para Usar
 
 El proyecto está **100% funcional** y listo para ser utilizado. Todas las queries están implementadas con su lógica completa y pueden ser probadas inmediatamente.
 
 ---
 
-## 📞 Soporte
+## Soporte
 
 Para cualquier duda sobre las queries o su implementación, consulta:
 1. `QUERIES_INGENIOSAS.md` - Documentación técnica
@@ -343,7 +343,7 @@ Para cualquier duda sobre las queries o su implementación, consulta:
 
 ---
 
-## 🏆 Logros del Proyecto
+## Logros del Proyecto
 
 ✨ **Gateway GraphQL completo y funcional**  
 ✨ **9 queries complejas con lógica de negocio**  
@@ -353,7 +353,4 @@ Para cualquier duda sobre las queries o su implementación, consulta:
 ✨ **Código limpio y bien organizado**  
 
 ---
-
-**¡Proyecto completado exitosamente! 🎉**
-
 Desarrollado con ❤️ usando NestJS y GraphQL

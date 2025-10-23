@@ -4,7 +4,7 @@ Este documento describe las 9 queries complejas implementadas en el GraphQL Gate
 
 ---
 
-## INTEGRANTE 1: Consultas de Información Agregada
+## MARCO: Consultas de Información Agregada
 
 Estas queries combinan datos de 2 o más entidades del servicio REST para generar vistas consolidadas.
 
@@ -141,7 +141,7 @@ query {
 
 ---
 
-## 📈 INTEGRANTE 2: Consultas de Análisis de Negocio
+## 📈 JOSTIN: Consultas de Análisis de Negocio
 
 Estas queries realizan cálculos y análisis sobre los datos para generar métricas, estadísticas y KPIs.
 
@@ -278,7 +278,7 @@ query {
 
 ---
 
-## 🔍 INTEGRANTE 3: Consultas de Búsqueda y Filtrado Avanzado
+## 🔍 JEREMY: Consultas de Búsqueda y Filtrado Avanzado
 
 Estas queries implementan búsquedas complejas con múltiples filtros, ordenamiento y lógica inteligente.
 
@@ -450,17 +450,17 @@ query {
 
 ---
 
-## 🎯 Resumen de Distribución
+## Resumen de Distribución
 
 | Integrante | Tipo de Query | Queries Asignadas |
 |------------|---------------|-------------------|
-| **Integrante 1** | Información Agregada | 1. Cartelera Completa<br>2. Ocupación de Salas<br>3. Historial de Usuario |
-| **Integrante 2** | Análisis de Negocio | 4. Películas Más Populares<br>5. Rendimiento por Horario<br>6. Análisis de Ingresos |
-| **Integrante 3** | Búsqueda y Filtrado | 7. Búsqueda Avanzada de Funciones<br>8. Clientes Frecuentes<br>9. Disponibilidad con Recomendaciones |
+| **Marco** | Información Agregada | 1. Cartelera Completa<br>2. Ocupación de Salas<br>3. Historial de Usuario |
+| **Jostin** | Análisis de Negocio | 4. Películas Más Populares<br>5. Rendimiento por Horario<br>6. Análisis de Ingresos |
+| **Jeremy** | Búsqueda y Filtrado | 7. Búsqueda Avanzada de Funciones<br>8. Clientes Frecuentes<br>9. Disponibilidad con Recomendaciones |
 
 ---
 
-## 📝 Notas de Implementación
+## Notas de Implementación
 
 1. **Todas las queries están definidas** en `src/analytics/analytics.resolver.ts`
 2. **Los tipos GraphQL** están en:
@@ -470,14 +470,14 @@ query {
 3. **La lógica de negocio** se implementa en `src/analytics/analytics.service.ts`
 4. **El módulo** está registrado en `src/analytics/analytics.module.ts`
 
-## 🚀 Cómo Probar
+## Cómo Probar
 
 1. Inicia el servidor GraphQL: `npm run start:dev`
 2. Accede al playground: `http://localhost:3001/graphql`
 3. Copia y pega cualquiera de las queries de ejemplo
 4. Ajusta los parámetros según tus necesidades
 
-## 💡 Valor de Negocio
+## Valor de Negocio
 
 Estas queries proporcionan:
 - **Dashboards en tiempo real** para gerencia
