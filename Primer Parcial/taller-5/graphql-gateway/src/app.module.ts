@@ -34,7 +34,6 @@ import { AsientoModule } from './asiento/asiento.module';
     FuncionModule,
     FacturaModule,
     AsientoModule,
-    // Aquí se importarán los módulos de resolvers
   ],
 })
 export class AppModule { }

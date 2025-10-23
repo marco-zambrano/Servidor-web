@@ -1,35 +1,39 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Args, ID, ResolveField, Parent } from '@nestjs/graphql';
 import { AsientoService } from './asiento.service';
-import { Asiento } from './entities/asiento.entity';
-import { CreateAsientoInput } from './dto/create-asiento.input';
-import { UpdateAsientoInput } from './dto/update-asiento.input';
+import { SalasService } from '../salas/salas.service';
+import { ReservaAsientoService } from '../reserva-asiento/reserva-asiento.service';
+import { AsientoType } from '../types/asiento.type';
+import { SalaType } from '../types/sala.type';
+import { ReservaAsientoType } from '../types/reserva-asiento.type';
 
-@Resolver(() => Asiento)
+@Resolver(() => AsientoType)
 export class AsientoResolver {
-  constructor(private readonly asientoService: AsientoService) {}
+  constructor(
+    private readonly asientoService: AsientoService,
+    private readonly salasService: SalasService,
+    private readonly reservaAsientoService: ReservaAsientoService,
+  ) {}
 
-  @Mutation(() => Asiento)
-  createAsiento(@Args('createAsientoInput') createAsientoInput: CreateAsientoInput) {
-    return this.asientoService.create(createAsientoInput);
-  }
-
-  @Query(() => [Asiento], { name: 'asiento' })
+  @Query(() => [AsientoType], { name: 'asientos' })
   findAll() {
     return this.asientoService.findAll();
   }
 
-  @Query(() => Asiento, { name: 'asiento' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  @Query(() => AsientoType, { name: 'asiento' })
+  findOne(@Args('id', { type: () => ID }) id: string) {
     return this.asientoService.findOne(id);
   }
 
-  @Mutation(() => Asiento)
-  updateAsiento(@Args('updateAsientoInput') updateAsientoInput: UpdateAsientoInput) {
-    return this.asientoService.update(updateAsientoInput.id, updateAsientoInput);
+  @ResolveField(() => SalaType, { nullable: true })
+  async sala(@Parent() asiento: AsientoType) {
+    if (asiento.sala?.id_sala) {
+      return this.salasService.findOne(asiento.sala.id_sala);
+    }
+    return null;
   }
 
-  @Mutation(() => Asiento)
-  removeAsiento(@Args('id', { type: () => Int }) id: number) {
-    return this.asientoService.remove(id);
+  @ResolveField(() => [ReservaAsientoType], { nullable: true })
+  async reservasAsiento(@Parent() asiento: AsientoType) {
+    return this.reservaAsientoService.findByAsiento(asiento.id_asiento);
   }
 }
