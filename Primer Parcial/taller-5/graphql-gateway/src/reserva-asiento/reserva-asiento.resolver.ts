@@ -1,35 +1,42 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Args, ID, ResolveField, Parent } from '@nestjs/graphql';
 import { ReservaAsientoService } from './reserva-asiento.service';
-import { ReservaAsiento } from './entities/reserva-asiento.entity';
-import { CreateReservaAsientoInput } from './dto/create-reserva-asiento.input';
-import { UpdateReservaAsientoInput } from './dto/update-reserva-asiento.input';
+import { ReservaService } from '../reserva/reserva.service';
+import { AsientoService } from '../asiento/asiento.service';
+import { ReservaAsientoType } from '../types/reserva-asiento.type';
+import { ReservaType } from '../types/reserva.type';
+import { AsientoType } from '../types/asiento.type';
 
-@Resolver(() => ReservaAsiento)
+@Resolver(() => ReservaAsientoType)
 export class ReservaAsientoResolver {
-  constructor(private readonly reservaAsientoService: ReservaAsientoService) {}
+  constructor(
+    private readonly reservaAsientoService: ReservaAsientoService,
+    private readonly reservaService: ReservaService,
+    private readonly asientoService: AsientoService,
+  ) {}
 
-  @Mutation(() => ReservaAsiento)
-  createReservaAsiento(@Args('createReservaAsientoInput') createReservaAsientoInput: CreateReservaAsientoInput) {
-    return this.reservaAsientoService.create(createReservaAsientoInput);
-  }
-
-  @Query(() => [ReservaAsiento], { name: 'reservaAsiento' })
+  @Query(() => [ReservaAsientoType], { name: 'reservasAsiento' })
   findAll() {
     return this.reservaAsientoService.findAll();
   }
 
-  @Query(() => ReservaAsiento, { name: 'reservaAsiento' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  @Query(() => ReservaAsientoType, { name: 'reservaAsiento' })
+  findOne(@Args('id', { type: () => ID }) id: string) {
     return this.reservaAsientoService.findOne(id);
   }
 
-  @Mutation(() => ReservaAsiento)
-  updateReservaAsiento(@Args('updateReservaAsientoInput') updateReservaAsientoInput: UpdateReservaAsientoInput) {
-    return this.reservaAsientoService.update(updateReservaAsientoInput.id, updateReservaAsientoInput);
+  @ResolveField(() => ReservaType, { nullable: true })
+  async reserva(@Parent() reservaAsiento: ReservaAsientoType) {
+    if (reservaAsiento.reserva?.id_reserva) {
+      return this.reservaService.findOne(reservaAsiento.reserva.id_reserva);
+    }
+    return null;
   }
 
-  @Mutation(() => ReservaAsiento)
-  removeReservaAsiento(@Args('id', { type: () => Int }) id: number) {
-    return this.reservaAsientoService.remove(id);
+  @ResolveField(() => AsientoType, { nullable: true })
+  async asiento(@Parent() reservaAsiento: ReservaAsientoType) {
+    if (reservaAsiento.asiento?.id_asiento) {
+      return this.asientoService.findOne(reservaAsiento.asiento.id_asiento);
+    }
+    return null;
   }
 }

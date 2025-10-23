@@ -1,26 +1,23 @@
 import { Injectable } from '@nestjs/common';
-import { CreateSalaInput } from './dto/create-sala.input';
-import { UpdateSalaInput } from './dto/update-sala.input';
+import { HttpService } from '@nestjs/axios';
+import { firstValueFrom } from 'rxjs';
+import { SalaType } from '../types/sala.type';
 
 @Injectable()
 export class SalasService {
-  create(createSalaInput: CreateSalaInput) {
-    return 'This action adds a new sala';
+  constructor(private readonly httpService: HttpService) {}
+
+  async findAll(): Promise<SalaType[]> {
+    const response = await firstValueFrom(
+      this.httpService.get('/salas')
+    );
+    return response.data;
   }
 
-  findAll() {
-    return `This action returns all salas`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} sala`;
-  }
-
-  update(id: number, updateSalaInput: UpdateSalaInput) {
-    return `This action updates a #${id} sala`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} sala`;
+  async findOne(id: string): Promise<SalaType> {
+    const response = await firstValueFrom(
+      this.httpService.get(`/salas/${id}`)
+    );
+    return response.data;
   }
 }

@@ -1,8 +1,21 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
+import { HttpModule } from '@nestjs/axios';
 import { ReservaService } from './reserva.service';
 import { ReservaResolver } from './reserva.resolver';
+import { FuncionModule } from '../funcion/funcion.module';
+import { UsersModule } from '../users/users.module';
+import { FacturaModule } from '../factura/factura.module';
+import { ReservaAsientoModule } from '../reserva-asiento/reserva-asiento.module';
 
 @Module({
+  imports: [
+    HttpModule,
+    forwardRef(() => FuncionModule),
+    forwardRef(() => UsersModule),
+    forwardRef(() => FacturaModule),
+    forwardRef(() => ReservaAsientoModule),
+  ],
   providers: [ReservaResolver, ReservaService],
+  exports: [ReservaService],
 })
 export class ReservaModule {}

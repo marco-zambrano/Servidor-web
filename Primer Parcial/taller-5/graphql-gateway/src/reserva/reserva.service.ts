@@ -1,26 +1,33 @@
 import { Injectable } from '@nestjs/common';
-import { CreateReservaInput } from './dto/create-reserva.input';
-import { UpdateReservaInput } from './dto/update-reserva.input';
+import { HttpService } from '@nestjs/axios';
+import { firstValueFrom } from 'rxjs';
+import { ReservaType } from '../types/reserva.type';
 
 @Injectable()
 export class ReservaService {
-  create(createReservaInput: CreateReservaInput) {
-    return 'This action adds a new reserva';
+  constructor(private readonly httpService: HttpService) {}
+
+  async findAll(): Promise<ReservaType[]> {
+    const response = await firstValueFrom(
+      this.httpService.get('/reserva')
+    );
+    return response.data;
   }
 
-  findAll() {
-    return `This action returns all reserva`;
+  async findOne(id: string): Promise<ReservaType> {
+    const response = await firstValueFrom(
+      this.httpService.get(`/reserva/${id}`)
+    );
+    return response.data;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} reserva`;
+  async findByFuncion(funcionId: string): Promise<ReservaType[]> {
+    const reservas = await this.findAll();
+    return reservas.filter(r => r.funcion?.id_funcion === funcionId);
   }
 
-  update(id: number, updateReservaInput: UpdateReservaInput) {
-    return `This action updates a #${id} reserva`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} reserva`;
+  async findByUsuario(usuarioId: string): Promise<ReservaType[]> {
+    const reservas = await this.findAll();
+    return reservas.filter(r => r.usuario?.id_usuario === usuarioId);
   }
 }
