@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
 import { ReservaType } from '../types/reserva.type';
@@ -8,17 +8,31 @@ export class ReservaService {
   constructor(private readonly httpService: HttpService) {}
 
   async findAll(): Promise<ReservaType[]> {
-    const response = await firstValueFrom(
-      this.httpService.get('/reserva')
-    );
-    return response.data;
+    try {
+      const response = await firstValueFrom(
+        this.httpService.get('/reserva')
+      );
+      return response.data;
+    } catch (error) {
+      throw new HttpException(
+        error.response?.data || 'Error al obtener reservas',
+        error.response?.status || 500,
+      );
+    }
   }
 
   async findOne(id: string): Promise<ReservaType> {
-    const response = await firstValueFrom(
-      this.httpService.get(`/reserva/${id}`)
-    );
-    return response.data;
+    try {
+      const response = await firstValueFrom(
+        this.httpService.get(`/reserva/${id}`)
+      );
+      return response.data;
+    } catch (error) {
+      throw new HttpException(
+        error.response?.data || 'Error al obtener la reserva',
+        error.response?.status || 500,
+      );
+    }
   }
 
   async findByFuncion(funcionId: string): Promise<ReservaType[]> {
