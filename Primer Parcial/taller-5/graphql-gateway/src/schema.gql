@@ -1,0 +1,118 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type AsientoType {
+  estado: String!
+  id_asiento: ID!
+  numero: String!
+  reservasAsiento: [ReservaAsientoType!]
+  sala: SalaType
+}
+
+input CreateReporteInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type FacturaType {
+  fecha_emision: DateTime!
+  id_factura: ID!
+  metodo_pago: String!
+  reserva: ReservaType
+  total: Float!
+}
+
+type FuncionType {
+  fecha_hora: DateTime!
+  id_funcion: ID!
+  pelicula: PeliculaType
+  precio: Float!
+  reservas: [ReservaType!]
+  sala: SalaType
+}
+
+type Mutation {
+  createReporte(createReporteInput: CreateReporteInput!): Reporte!
+  removeReporte(id: Int!): Reporte!
+  updateReporte(updateReporteInput: UpdateReporteInput!): Reporte!
+}
+
+type PeliculaType {
+  clasificacion: String
+  descripcion: String
+  funciones: [FuncionType!]
+  genero: String!
+  id_pelicula: ID!
+  titulo: String!
+}
+
+type Query {
+  asiento(id: ID!): AsientoType!
+  asientos: [AsientoType!]!
+  factura(id: ID!): FacturaType!
+  facturas: [FacturaType!]!
+  funcion(id: ID!): FuncionType!
+  funciones: [FuncionType!]!
+  pelicula(id: ID!): PeliculaType!
+  peliculas: [PeliculaType!]!
+  reporte(id: Int!): Reporte!
+  reserva(id: ID!): ReservaType!
+  reservaAsiento(id: ID!): ReservaAsientoType!
+  reservas: [ReservaType!]!
+  reservasAsiento: [ReservaAsientoType!]!
+  sala(id: ID!): SalaType!
+  salas: [SalaType!]!
+  user(id: ID!): UserType!
+  users: [UserType!]!
+}
+
+type Reporte {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+type ReservaAsientoType {
+  asiento: AsientoType
+  id: ID!
+  reserva: ReservaType
+}
+
+type ReservaType {
+  cantidad_asientos: Int!
+  estado: String!
+  factura: FacturaType
+  funcion: FuncionType
+  id_reserva: ID!
+  reservasAsiento: [ReservaAsientoType!]
+  usuario: UserType
+}
+
+type SalaType {
+  asientos: [AsientoType!]
+  capacidad: Int!
+  estado: String!
+  funciones: [FuncionType!]
+  id_sala: ID!
+  nombre: String!
+  tipo: String!
+}
+
+input UpdateReporteInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+type UserType {
+  correo: String!
+  id_usuario: ID!
+  nombre: String!
+  reservas: [ReservaType!]
+  rol: String!
+}
