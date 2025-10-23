@@ -1,35 +1,34 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Args } from '@nestjs/graphql';
 import { AnalyticsService } from './analytics.service';
-import { Analytics } from './entities/analytics.entity';
-import { CreateAnalyticsInput } from './dto/create-analytics.input';
-import { UpdateAnalyticsInput } from './dto/update-analytics.input';
 
-@Resolver(() => Analytics)
+import { PeriodoAnalisisInput, VentasAnalisisType } from '../inputs/analytics/analisis-ventas.input';
+import { SalaKPIsType } from '../inputs/analytics/ocupacion-sala.input';
+import { GeneroAnalisisType } from '../inputs/analytics/analisis-comparativo.input';
+
+@Resolver()
 export class AnalyticsResolver {
-  constructor(private readonly analyticsService: AnalyticsService) {}
+  constructor(private analyticsService: AnalyticsService) {}
 
-  @Mutation(() => Analytics)
-  createAnalytics(@Args('createAnalyticsInput') createAnalyticsInput: CreateAnalyticsInput) {
-    return this.analyticsService.create(createAnalyticsInput);
+  @Query(() => VentasAnalisisType, { name: 'ventasAnalisis' })
+  async getVentasAnalisis(
+    @Args('input') input: PeriodoAnalisisInput
+  ) {
+    return this.analyticsService.getVentasAnalisis(
+      input.fecha_inicio,
+      input.fecha_fin,
+      input.agrupar_por
+    );
   }
 
-  @Query(() => [Analytics], { name: 'analytics' })
-  findAll() {
-    return this.analyticsService.findAll();
+  @Query(() => SalaKPIsType, { name: 'salaKPIs' })
+  async getSalaKPIs(
+    @Args('idSala', { type: () => String }) idSala: string
+  ) {
+    return this.analyticsService.getSalaKPIs(idSala);
   }
 
-  @Query(() => Analytics, { name: 'analytics' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.analyticsService.findOne(id);
-  }
-
-  @Mutation(() => Analytics)
-  updateAnalytics(@Args('updateAnalyticsInput') updateAnalyticsInput: UpdateAnalyticsInput) {
-    return this.analyticsService.update(updateAnalyticsInput.id, updateAnalyticsInput);
-  }
-
-  @Mutation(() => Analytics)
-  removeAnalytics(@Args('id', { type: () => Int }) id: number) {
-    return this.analyticsService.remove(id);
+  @Query(() => [GeneroAnalisisType], { name: 'generoAnalisis' })
+  async getGeneroAnalisis() {
+    return this.analyticsService.getGeneroAnalisis();
   }
 }

@@ -1,6 +1,6 @@
 import { ObjectType, Field, ID, Float, Int, InputType } from '@nestjs/graphql';
 
-ObjectType();
+ObjectType()
 export class SalaKPIsType {
   @Field(() => ID)
   id_sala: string;
