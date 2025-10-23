@@ -3,15 +3,16 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { HttpModule } from '@nestjs/axios';
 import { join } from 'path';
-import { UsuariosRestService } from './usuarios/usuarios-rest/usuarios-rest.service';
-import { SalasRestService } from './salas/salas-rest/salas-rest.service';
-import { AsientosRestService } from './asientos/asientos-rest/asientos-rest.service';
-import { PeliculasRestService } from './peliculas/peliculas-rest/peliculas-rest.service';
-import { FuncionesRestService } from './funciones/funciones-rest/funciones-rest.service';
-import { ReservasRestService } from './reservas/reservas-rest/reservas-rest.service';
-import { ReservasAsientosRestService } from './reservas-asientos/reservas-asientos-rest/reservas-asientos-rest.service';
-import { FacturasRestService } from './facturas/facturas-rest/facturas-rest.service';
-import { ReportesRestService } from './reportes/reportes-rest/reportes-rest.service';
+
+import { ReportesModule } from './reportes/reportes.module';
+import { FacturasModule } from './facturas/facturas.module';
+import { ReservasAsientosModule } from './reservas-asientos/reservas-asientos.module';
+import { ReservasModule } from './reservas/reservas.module';
+import { FuncionesModule } from './funciones/funciones.module';
+import { PeliculasModule } from './peliculas/peliculas.module';
+import { AsientosModule } from './asientos/asientos.module';
+import { UsersModule } from './users/users.module';
+import { SalasModule } from './salas/salas.module';
 
 @Module({
   imports: [
@@ -26,8 +27,16 @@ import { ReportesRestService } from './reportes/reportes-rest/reportes-rest.serv
       timeout: 5000,
       maxRedirects: 5,
     }),
-    // Aquí se importarán los módulos de resolvers
+    SalasModule,
+    UsersModule,
+    AsientosModule,
+    PeliculasModule,
+    FuncionesModule,
+    ReservasModule,
+    ReservasAsientosModule,
+    FacturasModule,
+    ReportesModule,
   ],
-  providers: [UsuariosRestService, SalasRestService, AsientosRestService, PeliculasRestService, FuncionesRestService, ReservasRestService, ReservasAsientosRestService, FacturasRestService, ReportesRestService],
+  providers: [],
 })
 export class AppModule {}
