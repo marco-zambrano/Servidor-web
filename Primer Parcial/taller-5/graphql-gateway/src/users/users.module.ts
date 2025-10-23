@@ -1,8 +1,12 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
+import { HttpModule } from '@nestjs/axios';
 import { UsersService } from './users.service';
 import { UsersResolver } from './users.resolver';
+import { ReservaModule } from '../reserva/reserva.module';
 
 @Module({
+  imports: [HttpModule, forwardRef(() => ReservaModule)],
   providers: [UsersResolver, UsersService],
+  exports: [UsersService],
 })
 export class UsersModule {}
