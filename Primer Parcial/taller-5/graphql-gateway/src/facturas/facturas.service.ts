@@ -8,14 +8,21 @@ export class FacturasService {
 
   async findAll() {
     const response = await firstValueFrom(
-      this.httpService.get('/reporte')
+      this.httpService.get('/factura')
     );
     return response.data;
   }
 
   async findOne(id: string) {
     const response = await firstValueFrom(
-      this.httpService.get(`/reporte/${id}`)
+      this.httpService.get(`/factura/${id}`)
+    );
+    return response.data;
+  }
+
+  async findByReserva(reservaId: string) {
+    const response = await firstValueFrom(
+      this.httpService.get(`/factura?reserva=${reservaId}`)
     );
     return response.data;
   }

@@ -5,7 +5,7 @@ import { firstValueFrom } from 'rxjs';
 @Injectable()
 export class PeliculasService {
   constructor(private readonly httpService: HttpService) {}
-  
+
   async findAll() {
     const response = await firstValueFrom(
       this.httpService.get('/peliculas')

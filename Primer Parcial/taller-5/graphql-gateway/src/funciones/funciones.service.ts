@@ -19,4 +19,19 @@ export class FuncionesService {
     );
     return response.data;
   }
+
+  async findByPelicula(peliculaId: string) {
+    const response = await firstValueFrom(
+      this.httpService.get(`/funcion?pelicula=${peliculaId}`)
+    );
+    return response.data;
+  }
+
+  async findBySala(salaId: string) {
+    const response = await firstValueFrom(
+      this.httpService.get(`/funcion?sala=${salaId}`)
+    );
+    return response.data;
+  }
 }
+

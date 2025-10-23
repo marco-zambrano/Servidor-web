@@ -19,5 +19,4 @@ export class UsersService {
     );
     return response.data;
   }
-
 }

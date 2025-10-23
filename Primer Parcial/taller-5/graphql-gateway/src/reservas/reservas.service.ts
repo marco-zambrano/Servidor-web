@@ -19,4 +19,18 @@ export class ReservasService {
     );
     return response.data;
   }
+
+  async findByUsuario(usuarioId: string) {
+    const response = await firstValueFrom(
+      this.httpService.get(`/reserva?usuario=${usuarioId}`)
+    );
+    return response.data;
+  }
+
+  async findByFuncion(funcionId: string) {
+    const response = await firstValueFrom(
+      this.httpService.get(`/reserva?funcion=${funcionId}`)
+    );
+    return response.data;
+  }
 }

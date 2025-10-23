@@ -19,4 +19,11 @@ export class AsientosService {
     );
     return response.data;
   }
+
+  async findBySala(salaId: string) {
+    const response = await firstValueFrom(
+      this.httpService.get(`/asiento?sala=${salaId}`)
+    );
+    return response.data;
+  }
 }

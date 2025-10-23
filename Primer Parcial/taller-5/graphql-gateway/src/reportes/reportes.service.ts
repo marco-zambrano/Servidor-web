@@ -19,4 +19,11 @@ export class ReportesService {
     );
     return response.data;
   }
+
+  async findByAdmin(adminId: string) {
+    const response = await firstValueFrom(
+      this.httpService.get(`/reporte?admin=${adminId}`)
+    );
+    return response.data;
+  }
 }

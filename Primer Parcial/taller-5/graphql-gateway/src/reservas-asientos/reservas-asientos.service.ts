@@ -19,4 +19,11 @@ export class ReservasAsientosService {
     );
     return response.data;
   }
+
+  async findByReserva(reservaId: string) {
+    const response = await firstValueFrom(
+      this.httpService.get(`/reserva-asiento?reserva=${reservaId}`)
+    );
+    return response.data;
+  }
 }
